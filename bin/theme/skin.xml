@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Window size="640,480" caption="0,0,0,35">
+	<VerticalLayout>
+		<!-- 标题栏 -->
+		<HorizontalLayout height="50" bkcolor="#FFD6DBE9">
+			<Control bkimage="cloudMusic.png" width="48" height="48"/>
+		</HorizontalLayout>
+		<!-- 窗口内容区域 -->
+		<HorizontalLayout bkcolor="#FF4D6082">
+		</HorizontalLayout>
+	</VerticalLayout>
+</Window>
