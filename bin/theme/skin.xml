@@ -1,38 +1,82 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Window size="640,480" caption="0,0,0,35">
+<Window size="1022,670" caption="0,0,0,35">
+	<Font shared="true" id="1" name="微软雅黑" size="15" />
 	<VerticalLayout>
 		<!-- 标题栏 -->
 		<HorizontalLayout  height="50" bkcolor="#FFBF3F3F" >
 			<!-- Logo -->
-			<HorizontalLayout width="150" inset="15,15,15,0">
+			<HorizontalLayout width="200" inset="15,15,15,0">
 				<Control bkimage="cloud.png" width="24" height="24" />
-				<label text="网易云音乐" height="24" textcolor="#FFFFFFFF" padding="8"/>	
+				<label text="网易云音乐" height="24" textcolor="#FFFFFFFF"  padding="8"/>	
 			</HorizontalLayout>
 			
+			<!-- 左右、搜索、听歌识曲 -->
+			<HorizontalLayout width="500" childpadding="10" inset="30,15">
+				<!-- left button -->
+				<Button width="25" height="25"  normalimage="btn_left.png" borderround="13" padding="30" />
+				<!-- right button -->
+				<Button width="25" height="25"  normalimage="btn_right.png" borderround="13" />
+				<!-- 搜索 -->
+				<HorizontalLayout width="150" height="25" bkcolor="#FFDCDCDC" borderround="3,3" >
+					<Control bkimage="search.png" width="15" height="15" padding="5,5"/>
+					<Edit  text="搜索" height="25" padding="5" font="1" />  
+				</HorizontalLayout>
+				<Button width="25" height="25" normalimage="listenFind.png"/>
+			</HorizontalLayout>
+
 			<!-- 占位 -->
 			<Control />
+
+			<!-- 个人-->
+			<HorizontalLayout width="180" childpadding="10" inset="30,15">
+				<!-- user -->
+				<Button width="20" height="20" normalimage="btn_user.png"/>
+				<!-- login status -->
+				<Button width="20" height="20" normalimage="n_vip.png"/>
+				<!-- skin -->
+				<Button width="20" height="20" normalimage="btn_skin_nor.png" hotimage="btn_skin_hov.png"/>
+				<!-- setting -->
+				<Button width="20" height="20" normalimage="btn_setting_nor.png" hotimage="btn_setting_hov.png"/>
+				<!-- email -->
+				<Button width="20" height="20" normalimage="btn_email_nor.png" hotimage="btn_email_hov.png"/>
+			</HorizontalLayout>
+			
+			<Control bkimage="label_verticalLine.png" width="20" height="20" padding="0,15"/>
+			
 			
 			<!-- 基本窗口组件min,max,shutdown -->
 			<HorizontalLayout width="120" childpadding="12" inset="10,15,10,0">
 				<!-- min -->
-				<Button width="25" height="24" normalimage="btn_min_nor.png" hotimage="btn_min_hov.png" />
+				<Button name="btn_min" width="25" height="24" normalimage="btn_min_nor.png" hotimage="btn_min_hov.png" />
 				<!-- max -->
-				<Button width="25" height="24" normalimage="btn_max_nor.png" hotimage="btn_max_hov.png" />
+				<Button name="btn_max" width="25" height="24" normalimage="btn_max_nor.png" hotimage="btn_max_hov.png" />
 				<!-- restore-->
-				<Button width="25" height="24" normalimage="btn_restore_nor.png" hotimage="btn_restore_hov.png" visible="false" />
+				<Button name="btn_restore" width="25" height="24" normalimage="btn_restore_nor.png" hotimage="btn_restore_hov.png" visible="false" />
 				<!-- shutdown-->
-				<Button width="25" height="24" normalimage="btn_shutdown_nor.png" hotimage="btn_shutdown_hov.png" />
+				<Button name="btn_shutdown" width="25" height="24" normalimage="btn_shutdown_nor.png" hotimage="btn_shutdown_hov.png" />
 			</HorizontalLayout>
 			
 		</HorizontalLayout>
 		
 		<!-- 窗口内容 -->
-		<HorizontalLayout bkcolor="#FFFFFFFF">
-			<!-- 个人区域 -->
-			<VerticalLayout width="150" bkcolor="FFCDCACA">
+		<HorizontalLayout bkcolor="#FFFFFFFF" >
+			<!-- 功能区 -->
+			<VerticalLayout width="200" height="240" bkcolor="#FFFFFFFF" inset="15">
+				<Option height="40" bkcolor="#FFF31515" text="发现音乐" font="5" align="left" normalimage="tar_white_rec.png" hotimage="tar_shadow_rec.png" selectedimage="tar_shadow_rec.png" selected="true"/>
+				<Option height="40" text="播客" font="5" align="left" normalimage="tar_white_rec.png" hotimage="tar_shadow_rec.png" selectedimage="tar_shadow_rec.png"/>
+				<Option height="40" text="视频" font="5" align="left" normalimage="tar_white_rec.png" hotimage="tar_shadow_rec.png" selectedimage="tar_shadow_rec.png"/>
+				<Option height="40" text="关注" font="5" align="left" normalimage="tar_white_rec.png" hotimage="tar_shadow_rec.png" selectedimage="tar_shadow_rec.png"/>
+				<Option height="40" text="直播" font="5" align="left" normalimage="tar_white_rec.png" hotimage="tar_shadow_rec.png" selectedimage="tar_shadow_rec.png"/>
+				<Option height="40" text="私人FM" font="5" align="left" normalimage="tar_white_rec.png" hotimage="tar_shadow_rec.png" selectedimage="tar_shadow_rec.png"/>
+
+				<Label height="40" text="我的音乐" textcolor="#FFD4CDCD" font="3"/>
+
+				<Option   
 			</VerticalLayout>
 			
-			<!-- 推荐区域 -->
+
+
+			<!-- 内容区域 -->
 			<VerticalLayout bkcolor="#FF070707">
 			</VerticalLayout>
 		</HorizontalLayout>

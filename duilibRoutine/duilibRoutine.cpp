@@ -26,7 +26,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 #endif
 	if (FAILED(Hr)) return 0;
 
-	MainWndFrame* mainWnd = new MainWndFrame;
+	MainWndFrame* mainWnd = new (nothrow)MainWndFrame;
+	if (mainWnd == NULL) return 0;
 
 #if defined(WIN32) && !defined(UNDER_CE)
 	mainWnd->Create(NULL, mainWnd->GetWindowClassName(), UI_WNDSTYLE_FRAME | WS_CLIPCHILDREN, WS_EX_WINDOWEDGE, 0, 0, 600, 800);
