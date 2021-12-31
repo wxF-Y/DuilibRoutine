@@ -1,0 +1,6 @@
+﻿  duilibRoutine.cpp
+e:\duilibroutine\duilib\core\uimanager.h(45): warning C4091: “typedef ”: 没有声明变量时忽略“DuiLib::EVENTTYPE_UI”的左侧
+  MainWndFrame.cpp
+e:\duilibroutine\duilib\core\uimanager.h(45): warning C4091: “typedef ”: 没有声明变量时忽略“DuiLib::EVENTTYPE_UI”的左侧
+  正在生成代码...
+  duilibRoutine.vcxproj -> E:\DuilibRoutine\bin\duilibRoutine.exe

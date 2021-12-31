@@ -2,11 +2,44 @@
 <Window size="640,480" caption="0,0,0,35">
 	<VerticalLayout>
 		<!-- 标题栏 -->
-		<HorizontalLayout height="50" bkcolor="#FFD6DBE9">
-			<Control bkimage="cloudMusic.png" width="48" height="48"/>
+		<HorizontalLayout  height="50" bkcolor="#FFBF3F3F" >
+			<!-- Logo -->
+			<HorizontalLayout width="150" inset="15,15,15,0">
+				<Control bkimage="cloud.png" width="24" height="24" />
+				<label text="网易云音乐" height="24" textcolor="#FFFFFFFF" padding="8"/>	
+			</HorizontalLayout>
+			
+			<!-- 占位 -->
+			<Control />
+			
+			<!-- 基本窗口组件min,max,shutdown -->
+			<HorizontalLayout width="120" childpadding="12" inset="10,15,10,0">
+				<!-- min -->
+				<Button width="25" height="24" normalimage="btn_min_nor.png" hotimage="btn_min_hov.png" />
+				<!-- max -->
+				<Button width="25" height="24" normalimage="btn_max_nor.png" hotimage="btn_max_hov.png" />
+				<!-- restore-->
+				<Button width="25" height="24" normalimage="btn_restore_nor.png" hotimage="btn_restore_hov.png" visible="false" />
+				<!-- shutdown-->
+				<Button width="25" height="24" normalimage="btn_shutdown_nor.png" hotimage="btn_shutdown_hov.png" />
+			</HorizontalLayout>
+			
 		</HorizontalLayout>
-		<!-- 窗口内容区域 -->
-		<HorizontalLayout bkcolor="#FF4D6082">
+		
+		<!-- 窗口内容 -->
+		<HorizontalLayout bkcolor="#FFFFFFFF">
+			<!-- 个人区域 -->
+			<VerticalLayout width="150" bkcolor="FFCDCACA">
+			</VerticalLayout>
+			
+			<!-- 推荐区域 -->
+			<VerticalLayout bkcolor="#FF070707">
+			</VerticalLayout>
+		</HorizontalLayout>
+		
+		<!-- 歌曲播放栏 -->
+		<HorizontalLayout height="60" bkcolor="#FFFFFFFF">
+		
 		</HorizontalLayout>
 	</VerticalLayout>
 </Window>
