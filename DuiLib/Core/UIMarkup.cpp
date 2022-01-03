@@ -378,6 +378,7 @@ bool CMarkup::LoadFromFile(LPCTSTR pstrFilename, int encoding)
 {
     Release();
     CDuiString sFile = CPaintManagerUI::GetResourcePath();
+
     if( CPaintManagerUI::GetResourceZip().IsEmpty() ) {
         sFile += pstrFilename; 
         HANDLE hFile = ::CreateFile(sFile, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);

@@ -17,7 +17,7 @@ CDuiString MainWndFrame::GetSkinFile()
 
 CDuiString MainWndFrame::GetSkinFolder()
 {
-	return CPaintManagerUI::GetInstancePath();
+	return "theme";
 }
 
 void MainWndFrame::InitWindow()

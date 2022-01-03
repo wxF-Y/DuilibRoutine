@@ -15,8 +15,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	_In_ int       nCmdShow)
 {
 	CPaintManagerUI::SetInstance(hInstance);
-	CPaintManagerUI::SetCurrentPath(CPaintManagerUI::GetInstancePath());
-	CPaintManagerUI::SetResourcePath(_T("theme"));
+	//CPaintManagerUI::SetCurrentPath(CPaintManagerUI::GetInstancePath());
+	//CPaintManagerUI::SetResourcePath(_T("theme"));
 
 
 #if defined(WIN32) && !defined(UNDER_CE)
