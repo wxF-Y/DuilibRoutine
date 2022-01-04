@@ -49,8 +49,10 @@ void MainWndFrame::Notify(TNotifyUI & msg)
 			_btn_max->SetVisible(true);
 			SendMessage(WM_SYSCOMMAND, SC_RESTORE, 0);
 		}
-		else
+		else  if (strName == _T("btn_shutdown"))
 			SendMessage(WM_SYSCOMMAND, SC_CLOSE, 0);
+		else
+			return;
 	}
 
 	__super::Notify(msg);

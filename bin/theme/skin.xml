@@ -3,7 +3,7 @@
 	<Font shared="true" id="1" name="微软雅黑" size="15" />
 	<VerticalLayout>
 		<!-- 标题栏 -->
-		<HorizontalLayout  height="50" bkcolor="#FFBF3F3F" >
+		<HorizontalLayout  height="50" bkcolor="#FF2c2c2c" >
 			<!-- Logo -->
 			<HorizontalLayout width="200" inset="15,15,15,0">
 				<Control bkimage="cloud.png" width="24" height="24" />
@@ -59,31 +59,118 @@
 		</HorizontalLayout>
 		
 		<!-- 窗口内容 -->
-		<HorizontalLayout bkcolor="#FFFFFFFF" >
+		<HorizontalLayout bkcolor="#FFFFFFFF" bordercolor="#FF6D6D6D">
 			<!-- 功能区 -->
-			<VerticalLayout width="200" height="240" bkcolor="#FFFFFFFF" inset="15">
-				<Option height="40" bkcolor="#FFF31515" text="发现音乐" font="5" align="left" normalimage="tar_white_rec.png" hotimage="tar_shadow_rec.png" selectedimage="tar_shadow_rec.png" selected="true"/>
-				<Option height="40" text="播客" font="5" align="left" normalimage="tar_white_rec.png" hotimage="tar_shadow_rec.png" selectedimage="tar_shadow_rec.png"/>
-				<Option height="40" text="视频" font="5" align="left" normalimage="tar_white_rec.png" hotimage="tar_shadow_rec.png" selectedimage="tar_shadow_rec.png"/>
-				<Option height="40" text="关注" font="5" align="left" normalimage="tar_white_rec.png" hotimage="tar_shadow_rec.png" selectedimage="tar_shadow_rec.png"/>
-				<Option height="40" text="直播" font="5" align="left" normalimage="tar_white_rec.png" hotimage="tar_shadow_rec.png" selectedimage="tar_shadow_rec.png"/>
-				<Option height="40" text="私人FM" font="5" align="left" normalimage="tar_white_rec.png" hotimage="tar_shadow_rec.png" selectedimage="tar_shadow_rec.png"/>
-
-				<Label height="40" text="我的音乐" textcolor="#FFD4CDCD" font="3"/>
-
-			
+			<VerticalLayout width="200"  bkcolor="#FFFFFFFF" inset="15" multiexpanding="false" childpadding="5">
+				<!--
+				<List name="functions" height="410" bkcolor="#FFF04141" itemhotbkcolor="#FFE1DDDA" itemselectedbkcolor="#FFE1DDDA">
+					<ListLabelElement height="40" text="发现音乐"  font="5" selected="true" />
+					<ListLabelElement height="40" text="播客"  font="5" />
+					<ListLabelElement height="40" text="视频"  font="5" />
+					<ListLabelElement height="40" text="关注"  font="5" />
+					<ListLabelElement height="40" text="直播"  font="5" />
+					<ListLabelElement height="40" text="私人"  font="5" />
+					<ListLabelElement height="40" text="我的音乐" font="2" enabled="false"/>
+					<ListLabelElement height="40" text="本地与下载" font="5"/>
+					<ListLabelElement height="40" text="最近播放" font="5"/>
+					<ListLabelElement name="createdMusicList" height="40" text="创建的歌单" textcolor="#FFF3F1F1" font="5"/>
+				</List>
+				<List name="musicList" header="false" visible="false" bkcolor="#FFACA3A3">
+						<ListLabelElement height="40" text="我喜欢的音乐" font="5"/>
+						<ListLabelElement height="40" text="我喜欢的音乐" font="5"/>
+				</List>
+				-->
+				
+				<Option text="发现音乐" name="findMusic" height="40" align="left" hotimage=" file='tabbar_hover.png' " selectedimage=" file='tabbar_hover.png' "/>
+				<Option text="播客" name="boke" height="40" align="left" hotimage=" file='tabbar_hover.png' " selectedimage=" file='tabbar_hover.png' "/>
+				<Option text="视频" name="video" height="40" align="left" hotimage=" file='tabbar_hover.png' " selectedimage=" file='tabbar_hover.png' "/>
+				<Option text="关注" name="att" height="40" align="left" hotimage=" file='tabbar_hover.png' " selectedimage=" file='tabbar_hover.png' "/>
+				<Option text="直播" name="zhibo" height="40" align="left" hotimage=" file='tabbar_hover.png' " selectedimage=" file='tabbar_hover.png' "/>
+				<Option text="私人" name="private" height="40" align="left" hotimage=" file='tabbar_hover.png' " selectedimage=" file='tabbar_hover.png' "/>
+				<Label text="我的音乐" name="myMusic" height="20" enabled="false" align="left"/>
+				<Option text="本地与下载" name="localAndDownload" height="40" align="left" hotimage=" file='tabbar_hover.png' " selectedimage=" file='tabbar_hover.png' "/>
+				<Option text="最近播放" name="frequentlyPlay" height="40" align="left"  hotimage="tabbar_hover.png" selectedimage="tabbar_hover.png"/>
+				<TreeView >
+					<TreeNode name="createdMusicList" text="创建的歌单" height="40" >
+						<TreeNode text="我喜欢的音乐" height="40" align="left"/>
+					</TreeNode>
+				</TreeView>
 			</VerticalLayout>
 			
-
+			<Control width="1" bkcolor="#FFC6C6C6"/>
 
 			<!-- 内容区域 -->
-			<VerticalLayout bkcolor="#FF070707">
+			<VerticalLayout bkcolor="#FFFFFFFF">
 			</VerticalLayout>
 		</HorizontalLayout>
 		
+		<Control bkcolor="#FFC6C6C6" height="1"/>
+
 		<!-- 歌曲播放栏 -->
-		<HorizontalLayout height="60" bkcolor="#FFFFFFFF">
-		
+		<HorizontalLayout  height="70" bkcolor="#FFFFFFFF" inset="0,10,10,10">
+			<!-- 左侧歌手信息 -->
+			<HorizontalLayout width="200" inset="20">
+				<!-- 歌曲图 -->
+				<Container borderround="3" height="50" width="50" bkcolor="#FFE14B4B"/>
+				<!-- 歌手名和歌曲名 -->
+				<VerticalLayout inset="10">
+					<Label height="20" width="50" text="singer"/>
+					<Label height="20" width="50" text="songName"/>
+				</VerticalLayout>
+			</HorizontalLayout>
+
+			<!-- 占位符 -->
+			<Control />
+
+			<!-- 中间播放功能 -->
+			<VerticalLayout width="500" height="50">
+				<!-- 上层播放-->
+				<HorizontalLayout childpadding="30" inset="140,5,140,5">
+					<!--播放顺序-->
+					<Button width="20" height="20" normalimage="btn_loop_play.png" tooltip="列表循环"/>
+					<Button width="20" height="20" normalimage="btn_one_play.png" tooltip="单曲循环" visible="false"/>
+					<Button width="20" height="20" normalimage="btn_random_play.png" tooltip="随机播放" visible="false"/>
+					<Button width="20" height="20" normalimage="btn_order_play.png" tooltip="列表循环" visible="false"/>
+
+					<!--上一首-->
+					<Button width="20" height="20" normalimage="btn_pre_nor.png" hotimage="btn_pre_hov.png"  tooltip="上一首"/>
+
+					<!--暂停、播放-->
+					<Button width="20" height="20" normalimage="btn_play.png" tooltip="播放"/>
+					<Button width="20" height="20" normalimage="btn_pause.png" tooltip="暂停" visible="false"/>
+
+					<!--下一首-->
+					<Button width="20" height="20" normalimage="btn_next_nor.png" hotimage="btn_next_hov.png" tooltip="下一首"/>
+
+					<!--收藏-->
+					<Button width="20" height="20" normalimage="btn_music_collect.png"/>
+
+				</HorizontalLayout>
+				<!-- 下层播放进度 -->
+				<HorizontalLayout inset="100,8,100,8" childpadding="10">
+					<Label name="run" text="00:00" width="50" textpadding="10"/>					
+					<Slider  value="50" bkimage="bg.bmp" foreimage="fg.bmp" thumbimage="btn_slider_nor.png" thumbpushedimage="btn_slider_move.png" thumbsize="10,10"/>
+					<Label name="left" text="00:00" width="50" textpadding="10"/>
+				</HorizontalLayout>
+			</VerticalLayout>
+
+			<!-- 占位符 -->
+			<Control />
+
+			<!-- 右侧:音乐品质+鲸云音效+播放音量+一起听 -->
+			<HorizontalLayout width="240" inset="10,10,10,10" childpadding="15">
+				<Combo name="musicQuality" width="90" height="30" normalimage="Combo_nor.bmp" hotimage="Combo_over.bmp" pushedimage="Combo_over.bmp">
+					<ListLabelElement text="标准音质" selected="true"/>
+					<ListLabelElement text="较高音质"/>
+				</Combo>
+				<Button name="whaleCloud" width="30" height="30" bkimage="btn_WhaleCloud.png" tooltip="打开音效"/>
+				
+				<!--音量管理-->
+				<Button name="volume_opened" width="30" height="30" bkimage="btn_volume_open.png" tooltip="静音"/>
+				<Button name="volume_closed" width="30" height="30" bkimage="btn_volume_close.png" tooltip="恢复音量" visible="false"/>
+
+				<Button name="listen_together" width="30" height="30" bkimage="btn_listen_together.png" tooltip="开始一起听"/>
+			</HorizontalLayout>
 		</HorizontalLayout>
 	</VerticalLayout>
 </Window>

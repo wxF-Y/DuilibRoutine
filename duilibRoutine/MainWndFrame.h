@@ -21,5 +21,6 @@ private:
 	CControlUI* _btn_max;
 	CControlUI* _btn_restore;
 	CControlUI* _btn_shutdown;
+
 };
 
