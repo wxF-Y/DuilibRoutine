@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Window size="350,530" caption="0,0,0,35">
+    <!-- <Font id="1" name="微软雅黑" size="30" bold="true"/>
+    <VerticalLayout bkcolor="#FFFFFFFF">
+       <Label text="hello" font="1"/>
+    </VerticalLayout> -->
+    <TreeView bkcolor="#FFFFFFFF" vscrollbar="true"  itembkcolor="#FFAAAAAA" childpadding="10" itemselectedtextcolor="#FF919191" itemhottextcolor="B35A5A" multiexpanding="true" multipleitem="false">
+        <TreeNode text="收藏夹">
+            <TreeNode text="主页" />
+            <TreeNode text="桌面" />
+            <TreeNode text="下载" />
+            <TreeNode text="文档" />
+            <TreeNode text="回收站" />
+        </TreeNode>
+    </TreeView>
+</Window>

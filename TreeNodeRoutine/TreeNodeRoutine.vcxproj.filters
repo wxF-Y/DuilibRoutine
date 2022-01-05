@@ -24,29 +24,23 @@
     <ClInclude Include="Resource.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="duilibRoutine.h">
+    <ClInclude Include="TreeNodeRoutine.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="MainWndFrame.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="LoginWndFrame.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="duilibRoutine.cpp">
+    <ClCompile Include="TreeNodeRoutine.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="MainWndFrame.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="LoginWndFrame.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="duilibRoutine.rc">
+    <ResourceCompile Include="TreeNodeRoutine.rc">
       <Filter>资源文件</Filter>
     </ResourceCompile>
   </ItemGroup>
@@ -54,7 +48,7 @@
     <Image Include="small.ico">
       <Filter>资源文件</Filter>
     </Image>
-    <Image Include="duilibRoutine.ico">
+    <Image Include="TreeNodeRoutine.ico">
       <Filter>资源文件</Filter>
     </Image>
   </ItemGroup>

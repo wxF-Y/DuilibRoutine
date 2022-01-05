@@ -1,19 +1,19 @@
-﻿// duilibRoutine.cpp : 定义应用程序的入口点。
+﻿// TreeNodeRoutine.cpp : 定义应用程序的入口点。
 //
 
 #include "framework.h"
-#include "duilibRoutine.h"
-
+#include "TreeNodeRoutine.h"
 #include "MainWndFrame.h"
 
 #include "UIlib.h"
-
+using namespace DuiLib;
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
-	_In_opt_ HINSTANCE hPrevInstance,
-	_In_ LPWSTR    lpCmdLine,
-	_In_ int       nCmdShow)
+                     _In_opt_ HINSTANCE hPrevInstance,
+                     _In_ LPWSTR    lpCmdLine,
+                     _In_ int       nCmdShow)
 {
+
 	CPaintManagerUI::SetInstance(hInstance);
 
 
@@ -39,4 +39,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	CPaintManagerUI::MessageLoop();
 
 	return 0;
+
 }
+
+
+

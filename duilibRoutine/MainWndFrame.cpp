@@ -1,23 +1,25 @@
 #include "MainWndFrame.h"
 
 MainWndFrame::MainWndFrame()
-	:_btn_min{NULL},_btn_max{NULL},_btn_restore{NULL},_btn_shutdown{NULL}
+	:_btn_min{NULL},_btn_max{NULL},_btn_restore{NULL},_btn_shutdown{NULL},_btn_personal{NULL},
+	_loginWndFrame{NULL}
 {
-}
-
-LPCTSTR MainWndFrame::GetWindowClassName() const
-{
-	return _T("Wangxi");
-}
-
-CDuiString MainWndFrame::GetSkinFile()
-{
-	return _T("skin.xml");
 }
 
 CDuiString MainWndFrame::GetSkinFolder()
 {
-	return "theme";
+	
+	return _T("theme");
+}
+
+CDuiString MainWndFrame::GetSkinFile()
+{
+	return _T("main_frame.xml");
+}
+
+LPCTSTR MainWndFrame::GetWindowClassName(void) const
+{
+	return _T("Wangxi");
 }
 
 void MainWndFrame::InitWindow()
@@ -27,6 +29,8 @@ void MainWndFrame::InitWindow()
 	_btn_max = dynamic_cast<CButtonUI*>(m_PaintManager.FindControl(_T("btn_max")));
 	_btn_restore = dynamic_cast<CButtonUI*>(m_PaintManager.FindControl(_T("btn_restore")));
 	_btn_shutdown = dynamic_cast<CButtonUI*>(m_PaintManager.FindControl(_T("btn_shutdown")));
+	_btn_personal = dynamic_cast<CButtonUI*>(m_PaintManager.FindControl(_T("btn_personal")));
+	_btn_skin = dynamic_cast<CButtonUI*>(m_PaintManager.FindControl(_T("btn_skinChange")));
 }
 
 void MainWndFrame::Notify(TNotifyUI & msg)
@@ -51,6 +55,30 @@ void MainWndFrame::Notify(TNotifyUI & msg)
 		}
 		else  if (strName == _T("btn_shutdown"))
 			SendMessage(WM_SYSCOMMAND, SC_CLOSE, 0);
+		else if (strName == _T("btn_personal"))
+		{
+			if (_loginWndFrame == NULL)
+			{
+				_loginWndFrame = new (nothrow)LoginWndFrame;
+				ASSERT(_loginWndFrame);
+				if (_loginWndFrame == NULL)
+					MessageBox(NULL, _T("创建登录子窗口失败"), _T("MainWndFrame"), MB_OK | MB_ICONERROR);
+#if defined(WIN32) && !(UNDRE_CE)
+				_loginWndFrame->Create(this->GetHWND(), _loginWndFrame->GetWindowClassName(), UI_WNDSTYLE_FRAME | WS_CLIPCHILDREN, WS_EX_WINDOWEDGE, 0, 0, 300, 400);
+#else
+				_loginWndFrame->Create(this->GetHWND(), _loginWndFrame->GetWindowClassName(), UI_WNDSTYLE_FRAME, WS_EX_TOPMOST, 0, 0, GetSystemMetrics(SM_CXSCREEN), GetSystemMetrics(SM_CYSCREEN));
+#endif
+			}
+			_loginWndFrame->CenterWindow();
+			_loginWndFrame->ShowWindow();
+		}
+		else if (strName == _T("btn_skinChange"))
+		{
+			CDuiRect rcWindow;
+			GetWindowRect(m_hWnd, &rcWindow);
+			rcWindow.top = rcWindow.top + msg.pSender->GetPos().bottom;
+
+		}
 		else
 			return;
 	}
@@ -64,4 +92,6 @@ LRESULT MainWndFrame::OnClose(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL & bH
 		PostQuitMessage(0L);
 	return __super::OnClose(uMsg, wParam, lParam, bHandled);
 }
+
+
 

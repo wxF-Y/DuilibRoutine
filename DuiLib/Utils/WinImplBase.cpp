@@ -328,7 +328,7 @@ LRESULT WindowImplBase::OnCreate(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& 
 	else
 		pRoot = builder.Create(GetSkinFile().GetData()/*皮肤文件名*/, (UINT)0, this, &m_PaintManager);
 
-	ASSERT(pRoot );
+	//ASSERT(pRoot );
 	if (pRoot==NULL)
 	{
 		MessageBox(NULL,_T("加载资源文件失败"),_T("Duilib"),MB_OK|MB_ICONERROR);

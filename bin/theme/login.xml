@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Window size="350,530" caption="0,0,0,35">
+    <Font id="1" name="微软雅黑" size="30" bold="true"/>
+    <VerticalLayout bkcolor="#FFFFFFFF">
+        <!--关闭按钮-->
+        <HorizontalLayout height="35" inset="0,5,10,0" bkcolor="#FFEAEAEA">
+            <Control />
+            <Button name="btn_loginFrame_close" width="35" bkimage="btn_shutdown_nor.png"/>
+        </HorizontalLayout>
+
+        <HorizontalLayout inset="90,50,90,50">
+            <!--中间内容-->
+            <VerticalLayout>
+                <Label height="70" font="1" text="扫码登陆" align="center" />
+                <Control bkimage="code.jpg" height="170" width="170" padding="0,40,0,20"/>
+                <Label text="使用{u}{a}网易云音乐APP{/a}{/u}扫码登陆" showhtml="true" font="20" width="200" height="30" align="center"/>
+                <Label text="选择其它登陆模式 >" align="center" padding="0,40" textcolor="#FFBCBCBC"/> 
+            </VerticalLayout>
+        </HorizontalLayout>
+
+    </VerticalLayout>
+</Window>

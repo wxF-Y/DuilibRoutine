@@ -26,7 +26,6 @@
 
 			<!-- 占位 -->
 			<Control />
-			
 
 			<!-- 个人-->
 			<HorizontalLayout width="180" childpadding="10" inset="30,15">
@@ -35,7 +34,7 @@
 				<!-- login status -->
 				<Button width="20" height="20" normalimage="n_vip.png"/>
 				<!-- skin -->
-				<Button name="btn_skinChange" width="20" height="20" normalimage="btn_skin_nor.png" hotimage="btn_skin_hov.png"/>
+				<Button width="20" height="20" normalimage="btn_skin_nor.png" hotimage="btn_skin_hov.png"/>
 				<!-- setting -->
 				<Button width="20" height="20" normalimage="btn_setting_nor.png" hotimage="btn_setting_hov.png"/>
 				<!-- email -->
