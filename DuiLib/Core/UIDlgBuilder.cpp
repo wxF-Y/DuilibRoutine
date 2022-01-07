@@ -10,20 +10,20 @@ CDialogBuilder::CDialogBuilder() : m_pCallback(NULL), m_pstrtype(NULL)
 CControlUI* CDialogBuilder::Create(STRINGorID xml, LPCTSTR type, IDialogBuilderCallback* pCallback, 
                                    CPaintManagerUI* pManager, CControlUI* pParent)
 {
-	//加载资源
-
 	//资源ID为0-65535，两个字节；字符串指针为4个字节
 	//字符串以<开头认为是XML字符串，否则认为是XML文件
-    if( HIWORD(xml.m_lpstr) != NULL ) {
-        if( *(xml.m_lpstr) == _T('<') ) {
-            if( !m_xml.Load(xml.m_lpstr) ) return NULL;
+
+    if( HIWORD(xml.m_lpstr) != NULL ) { //HIWORD获取xml中资源字符串的16位,资源不为空
+        if( *(xml.m_lpstr) == _T('<') ) { //如果是xml字符串
+            if( !m_xml.Load(xml.m_lpstr) ) return NULL;//加载到xml解析器中
         }
-        else {
+        else {//是文件,从文件加载
             if( !m_xml.LoadFromFile(xml.m_lpstr) ) return NULL;
         }
     }
     else {
-        HRSRC hResource = ::FindResource(CPaintManagerUI::GetResourceDll(), xml.m_lpstr, type);
+		//传入的资源为空，重新获取资源
+        HRSRC hResource = ::FindResource(CPaintManagerUI::GetResourceDll(), xml.m_lpstr/*资源名*/, type/*资源类型*/);
         if( hResource == NULL ) return NULL;
         HGLOBAL hGlobal = ::LoadResource(CPaintManagerUI::GetResourceDll(), hResource);
         if( hGlobal == NULL ) {
@@ -31,8 +31,9 @@ CControlUI* CDialogBuilder::Create(STRINGorID xml, LPCTSTR type, IDialogBuilderC
             return NULL;
         }
 
+		//设置回调
         m_pCallback = pCallback;
-        if( !m_xml.LoadFromMem((BYTE*)::LockResource(hGlobal), ::SizeofResource(CPaintManagerUI::GetResourceDll(), hResource) )) return NULL;
+        if( !m_xml.LoadFromMem(( BYTE*)::LockResource(hGlobal), ::SizeofResource(CPaintManagerUI::GetResourceDll(), hResource) )) return NULL;//从全局内存块载入
         ::FreeResource(hResource);
         m_pstrtype = type;
     }
@@ -42,10 +43,8 @@ CControlUI* CDialogBuilder::Create(STRINGorID xml, LPCTSTR type, IDialogBuilderC
 
 CControlUI* CDialogBuilder::Create(IDialogBuilderCallback* pCallback, CPaintManagerUI* pManager, CControlUI* pParent)
 {
-	//解析资源
-
     m_pCallback = pCallback;
-    CMarkupNode root = m_xml.GetRoot();
+    CMarkupNode root = m_xml.GetRoot();   
     if( !root.IsValid() ) return NULL;
 
     if( pManager ) {

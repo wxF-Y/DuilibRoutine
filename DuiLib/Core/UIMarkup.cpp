@@ -258,18 +258,23 @@ bool CMarkup::Load(LPCTSTR pstrXML)
     return bRes;
 }
 
-bool CMarkup::LoadFromMem(BYTE* pByte, DWORD dwSize, int encoding)
+/*
+**param pByte: buffer ptr
+**param dwSize: buffer size
+**param encoding: 编码格式
+**/
+bool CMarkup::LoadFromMem(BYTE* pByte, DWORD dwSize, int encoding)	
 {
 #ifdef _UNICODE
     if (encoding == XMLFILE_ENCODING_UTF8)
     {
-        if( dwSize >= 3 && pByte[0] == 0xEF && pByte[1] == 0xBB && pByte[2] == 0xBF ) 
+        if( dwSize >= 3 && pByte[0] == 0xEF && pByte[1] == 0xBB && pByte[2] == 0xBF ) //0xEFBBBF--utf8格式文件头标识
         {
             pByte += 3; dwSize -= 3;
         }
-        DWORD nWide = ::MultiByteToWideChar( CP_UTF8, 0, (LPCSTR)pByte, dwSize, NULL, 0 );
+        DWORD nWide = ::MultiByteToWideChar( CP_UTF8, 0, (LPCSTR)pByte, dwSize, NULL, 0 ); //以UTF8格式转换到宽字节（unicode)，返回值为字符数
 
-        m_pstrXML = static_cast<LPTSTR>(malloc((nWide + 1)*sizeof(TCHAR)));
+        m_pstrXML = static_cast<LPTSTR>(malloc((nWide + 1)*sizeof(TCHAR)));//接受转换后字符buffer
         ::MultiByteToWideChar( CP_UTF8, 0, (LPCSTR)pByte, dwSize, m_pstrXML, nWide );
         m_pstrXML[nWide] = _T('\0');
     }
@@ -378,21 +383,20 @@ bool CMarkup::LoadFromFile(LPCTSTR pstrFilename, int encoding)
 {
     Release();
     CDuiString sFile = CPaintManagerUI::GetResourcePath();
-
-    if( CPaintManagerUI::GetResourceZip().IsEmpty() ) {
-        sFile += pstrFilename; 
-        HANDLE hFile = ::CreateFile(sFile, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+    if( CPaintManagerUI::GetResourceZip().IsEmpty() ) {//没有设置zip资源
+        sFile += pstrFilename;//文件完整路径
+        HANDLE hFile = ::CreateFile(sFile, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL); //打开文件,返回文件句柄
         if( hFile == INVALID_HANDLE_VALUE ) return _Failed(_T("Error opening file"));
-        DWORD dwSize = ::GetFileSize(hFile, NULL);
-        if( dwSize == 0 ) return _Failed(_T("File is empty"));
+        DWORD dwSize = ::GetFileSize(hFile, NULL); //文件大小
+        if( dwSize == 0 ) return _Failed(_T("File is empty"));  
         if ( dwSize > 4096*1024 ) return _Failed(_T("File too large"));
 
         DWORD dwRead = 0;
-        BYTE* pByte = new BYTE[ dwSize ];
-        ::ReadFile( hFile, pByte, dwSize, &dwRead, NULL );
-        ::CloseHandle( hFile );
+        BYTE* pByte = new BYTE[ dwSize ]; //buffer
+        ::ReadFile( hFile, pByte, dwSize, &dwRead, NULL );//从hFile读取dwSize字节到pByte buffer中,dwRead以值-结果方式保存读取字节数
+        ::CloseHandle( hFile );//关闭文件
 
-        if( dwRead != dwSize ) {
+        if( dwRead != dwSize ) { //读取不完整
             delete[] pByte;
             Release();
             return _Failed(_T("Could not read file"));
@@ -402,7 +406,7 @@ bool CMarkup::LoadFromFile(LPCTSTR pstrFilename, int encoding)
 
         return ret;
     }
-    else {	
+    else {//设置了zip资源
         sFile += CPaintManagerUI::GetResourceZip();
         HZIP hz = NULL;
         if( CPaintManagerUI::IsCachedResourceZip() ) hz = (HZIP)CPaintManagerUI::GetResourceZipHandle();
@@ -459,18 +463,18 @@ bool CMarkup::_Parse()
     _ReserveElement(); // Reserve index 0 for errors
     ::ZeroMemory(m_szErrorMsg, sizeof(m_szErrorMsg));
     ::ZeroMemory(m_szErrorXML, sizeof(m_szErrorXML));
-    LPTSTR pstrXML = m_pstrXML;
+    LPTSTR pstrXML = m_pstrXML;//pstrXML 用于遍历缓冲区
     return _Parse(pstrXML, 0);
 }
 
 bool CMarkup::_Parse(LPTSTR& pstrText, ULONG iParent)
 {
-    _SkipWhitespace(pstrText);
+    _SkipWhitespace(pstrText);//跳过文件中开头的空白符
     ULONG iPrevious = 0;
     for( ; ; ) 
     {
-        if( *pstrText == _T('\0') && iParent <= 1 ) return true;
-        _SkipWhitespace(pstrText);
+        if( *pstrText == _T('\0') && iParent <= 1 ) return true;//遍历到文件尾部,退出
+        _SkipWhitespace(pstrText);//跳过空白符
         if( *pstrText != _T('<') ) return _Failed(_T("Expected start tag"), pstrText);
         if( pstrText[1] == _T('/') ) return true;
         *pstrText++ = _T('\0');

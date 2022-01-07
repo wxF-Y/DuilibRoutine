@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<Window size="800,600" sizebox="4,4,4,4" caption="0,0,0,32" mininfo="600,400">
+<VerticalLayout name="VerticalLayoutUI1" bkcolor="#ff696969" >
+    <HorizontalLayout height="32" bkcolor="#ffe6e6dc" bkcolor2="#ffaaaaa0">
+        <Label name="Title" padding="2" text="test" />
+        <VerticalLayout />
+        <Button name="minbtn" width="50" text="min" />
+        <Button name="maxbtn" width="50" text="max" />
+        <Button name="closebtn" width="50" text="close" />
+    </HorizontalLayout>
+    <HorizontalLayout name="HorizontalLayoutUI1" width="600" height="30" padding="2,2,2,2" >
+        <Option name="Option01" float="false" text="Tab01" width="60" height="30" textcolor="#FF1c1c1c" disabledtextcolor="#FFA7A6AA" align="center" leftbordersize="1" bordercolor="#ff000000"  selectedtextcolor="#ff96cdcd" group="switch" selected="true" />
+        <Option name="Option02" float="false" text="Tab02" width="60" height="30" textcolor="#FF1c1c1c" disabledtextcolor="#FFA7A6AA" align="center" leftbordersize="1" bordercolor="#ff000000" selectedtextcolor="#ff96cdcd" group="switch" />
+    </HorizontalLayout>
+    <TabLayout name="TabLayoutMain" selectedid="-1" topbordersize="1" bordercolor="#ff000000" padding="2,2,2,2" >
+        <HorizontalLayout>
+            <Label text="This is tab01." bkcolor="#FFFFFFFF"/>
+        </HorizontalLayout>
+        <HorizontalLayout>
+            <Label text="This is tab02." />
+        </HorizontalLayout>
+    </TabLayout>
+</VerticalLayout>
+</Window>

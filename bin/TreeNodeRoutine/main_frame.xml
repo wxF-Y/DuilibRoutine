@@ -1,16 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Window size="350,530" caption="0,0,0,35">
-    <!-- <Font id="1" name="微软雅黑" size="30" bold="true"/>
-    <VerticalLayout bkcolor="#FFFFFFFF">
-       <Label text="hello" font="1"/>
-    </VerticalLayout> -->
-    <TreeView bkcolor="#FFFFFFFF" vscrollbar="true"  itembkcolor="#FFAAAAAA" childpadding="10" itemselectedtextcolor="#FF919191" itemhottextcolor="B35A5A" multiexpanding="true" multipleitem="false">
-        <TreeNode text="收藏夹">
-            <TreeNode text="主页" />
-            <TreeNode text="桌面" />
-            <TreeNode text="下载" />
-            <TreeNode text="文档" />
-            <TreeNode text="回收站" />
-        </TreeNode>
-    </TreeView>
+<Window size="350,530" caption="0,0,0,35" >
+    <VerticalLayout inset="10,6,10,6"  colorhsl="true" bkimage="voice_rect.png">
+        <Font id="1" name="微软雅黑" size="30"/>
+        <TreeView width="260" bkcolor="#FFFFFFFF" visiblefolderbtn="false">
+            <TreeNode width="250" height="35" text="A" bkcolor="#FFA0A0A0" padding="5,0,5,0" folderattr="width=&quot;50&quot; height=&quot;16&quot; bkcolor=&quot;#FF000000&quot;">
+                <Control width ="40" height="35" bkcolor="#FFD60000"/>
+                <TreeNode width="250" height="35" text="B" folderattr="width=&quot;50&quot; height=&quot;16&quot; bkcolor=&quot;#FF000000&quot;"/>
+            </TreeNode>
+
+            <TreeNode width="250" height="35" text="C" bkcolor="#FFA0A0A0" padding="5,0,5,0" folderattr="width=&quot;50&quot; height=&quot;16&quot; bkcolor=&quot;#FF000000&quot;">
+                <TreeNode width="250" height="35" text="D"/>
+            </TreeNode>
+        </TreeView>
+    </VerticalLayout>
 </Window>
+    <!-- <TreeView bkcolor="#ffffffff" visiblefolderbtn="true" visiblecheckbtn="true" vscrollbar="true" >
+		<TreeNode text="A1" folderattr="padding=&quot;0,1,0,0&quot; width=&quot;16&quot; height=&quot;16&quot; normalimage=&quot;file='treeview_b.png' source='0,0,16,16' &quot; hotimage=&quot;file='treeview_b.png' source='16,0,32,16' &quot; selectedimage=&quot;file='treeview_a.png' source='0,0,16,16' &quot; selectedhotimage=&quot;file='treeview_a.png' source='16,0,32,16' &quot;" checkboxattr="width=&quot;16&quot; height=&quot;16&quot; normalimage=&quot;file='unchecked.png' &quot; selectedimage=&quot;file='checked.png' &quot;" >
+			<TreeNode text="B1" folderattr="padding=&quot;0,1,0,0&quot; width=&quot;16&quot; height=&quot;16&quot; normalimage=&quot;file='treeview_b.png' source='0,0,16,16' &quot; hotimage=&quot;file='treeview_b.png' source='16,0,32,16' &quot; selectedimage=&quot;file='treeview_a.png' source='0,0,16,16' &quot; selectedhotimage=&quot;file='treeview_a.png' source='16,0,32,16' &quot;" checkboxattr="width=&quot;16&quot; height=&quot;16&quot; normalimage=&quot;file='unchecked.png' &quot; selectedimage=&quot;file='checked.png' &quot;" >
+				<TreeNode text="C1" folderattr="padding=&quot;0,1,0,0&quot; width=&quot;16&quot; height=&quot;16&quot; normalimage=&quot;file='treeview_b.png' source='0,0,16,16' &quot; hotimage=&quot;file='treeview_b.png' source='16,0,32,16' &quot; selectedimage=&quot;file='treeview_a.png' source='0,0,16,16' &quot; selectedhotimage=&quot;file='treeview_a.png' source='16,0,32,16' &quot;" checkboxattr="width=&quot;16&quot; height=&quot;16&quot; normalimage=&quot;file='unchecked.png' &quot; selectedimage=&quot;file='checked.png' &quot;" >
+					<TreeNode text="D" folderattr="padding=&quot;0,1,0,0&quot; width=&quot;16&quot; height=&quot;16&quot; normalimage=&quot;file='treeview_b.png' source='0,0,16,16' &quot; hotimage=&quot;file='treeview_b.png' source='16,0,32,16' &quot; selectedimage=&quot;file='treeview_a.png' source='0,0,16,16' &quot; selectedhotimage=&quot;file='treeview_a.png' source='16,0,32,16' &quot;" checkboxattr="width=&quot;16&quot; height=&quot;16&quot; normalimage=&quot;file='unchecked.png' &quot; selectedimage=&quot;file='checked.png' &quot;" >
+						<Button text="扩展按钮" width="100" />
+					</TreeNode>
+					<Button text="扩展按钮" width="100" />
+				</TreeNode>
+				<Edit text="扩展文本框" tipvalue="扩展文本框" width="100" />
+			</TreeNode>
+		</TreeNode>
+	</TreeView> -->
+<!-- checkboxattr=" width=&quot;20&quot; height=&quot;20&quot; bkcolor=&quot;#FF000000&quot;" -->
+
+<!-- 240 * 40  -->

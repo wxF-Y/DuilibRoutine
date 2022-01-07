@@ -467,7 +467,7 @@ private:
     //
     CDuiPtrArray m_aNotifiers;
     CDuiPtrArray m_aTimers;
-    CDuiPtrArray m_aPreMessageFilters;
+    CDuiPtrArray m_aPreMessageFilters;//消息过滤,存储继承自IMessageFilterUI类实现了MessageHandler方法的窗口对象指针(WinImplBase实现了MessageHandler方法).
     CDuiPtrArray m_aMessageFilters;
     CDuiPtrArray m_aPostPaintControls;
 	CDuiPtrArray m_aNativeWindow;
@@ -486,18 +486,18 @@ private:
 
     //
 	static HINSTANCE m_hResourceInstance;
-	static CDuiString m_pStrResourcePath;
-	static CDuiString m_pStrResourceZip;
+	static CDuiString m_pStrResourcePath;//资源路径
+	static CDuiString m_pStrResourceZip;//zip资源文件名
 	static HANDLE m_hResourceZip;
 
-	static bool m_bCachedResourceZip;
+	static bool m_bCachedResourceZip;//需要缓存还是已经缓存
 	static TResInfo m_SharedResInfo;
     static HINSTANCE m_hInstance;
 	static bool m_bUseHSL;
     static short m_H;
     static short m_S;
     static short m_L;
-    static CDuiPtrArray m_aPreMessages;
+    static CDuiPtrArray m_aPreMessages; //存储当前进程中所有CPaintManager的指针
     static CDuiPtrArray m_aPlugins;
 
 public:

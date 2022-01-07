@@ -28,7 +28,7 @@ public:
 private:
     CControlUI* _Parse(CMarkupNode* parent, CControlUI* pParent = NULL, CPaintManagerUI* pManager = NULL);
 
-    CMarkup m_xml;
+    CMarkup m_xml; //CMarkup	c++ xml解析器	一个独立的小类
     IDialogBuilderCallback* m_pCallback;
     LPCTSTR m_pstrtype;
 };

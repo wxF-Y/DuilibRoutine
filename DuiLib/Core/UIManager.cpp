@@ -77,7 +77,7 @@ PFUNCUPDATELAYEREDWINDOW g_fUpdateLayeredWindow = NULL;
 HPEN m_hUpdateRectPen = NULL;
 
 HINSTANCE CPaintManagerUI::m_hResourceInstance = NULL;
-CDuiString CPaintManagerUI::m_pStrResourcePath;
+CDuiString CPaintManagerUI::m_pStrResourcePath;//皮肤资源路径，未包含皮肤文件名 
 CDuiString CPaintManagerUI::m_pStrResourceZip;
 HANDLE CPaintManagerUI::m_hResourceZip = NULL;
 bool CPaintManagerUI::m_bCachedResourceZip = true;
@@ -207,23 +207,24 @@ CPaintManagerUI::~CPaintManagerUI()
 
 void CPaintManagerUI::Init(HWND hWnd, LPCTSTR pstrName)
 {
-	ASSERT(::IsWindow(hWnd));
+	ASSERT(::IsWindow(hWnd)); //判断hWnd句柄是否是一个窗口
 
-	m_mNameHash.Resize();
-	RemoveAllFonts();
-	RemoveAllImages();
-	RemoveAllDefaultAttributeList();
-	RemoveAllWindowCustomAttribute();
-	RemoveAllOptionGroups();
-	RemoveAllTimers();
+	//未深入查看源码
+	m_mNameHash.Resize();//名字hash空间
+	RemoveAllFonts();//绘图管理器移除所有字体
+	RemoveAllImages();//绘图管理器移除所有图片资源
+	RemoveAllDefaultAttributeList();//绘图管理器移除所有属性
+	RemoveAllWindowCustomAttribute();//绘图管理器移除所有窗口常用属性
+	RemoveAllOptionGroups();//绘图管理器移除所有操作组
+	RemoveAllTimers();//绘图管理器移除所有计时器
 
-	m_sName.Empty();
+	m_sName.Empty();//m_sName字符串置空,当前窗口名字
 	if( pstrName != NULL ) m_sName = pstrName;
 
-	if( m_hWndPaint != hWnd ) {
+	if( m_hWndPaint != hWnd ) {	//设置绘制的窗口句柄
 		m_hWndPaint = hWnd;
-		m_hDcPaint = ::GetDC(hWnd);
-		m_aPreMessages.Add(this);
+		m_hDcPaint = ::GetDC(hWnd); //执行hWnd必须立即执行的绘制
+		m_aPreMessages.Add(this);  //m_aPreMessages是绘图管理器的静态成员变量，将当前绘图管理器添加进入。MessageLoop会进行处理.
 	}
 }
 
@@ -237,7 +238,7 @@ CDuiString CPaintManagerUI::GetInstancePath()
     if( m_hInstance == NULL ) return _T('\0');
     
     TCHAR tszModule[MAX_PATH + 1] = { 0 };
-    ::GetModuleFileName(m_hInstance, tszModule, MAX_PATH);
+    ::GetModuleFileName(m_hInstance, tszModule, MAX_PATH);	//获取m_hInstace的路径，存入tszModule中，MAX_PATH大小
     CDuiString sInstancePath = tszModule;
     int pos = sInstancePath.ReverseFind(_T('\\'));
     if( pos >= 0 ) sInstancePath = sInstancePath.Left(pos + 1);
@@ -251,7 +252,7 @@ CDuiString CPaintManagerUI::GetCurrentPath()
     return tszModule;
 }
 
-HINSTANCE CPaintManagerUI::GetResourceDll()
+HINSTANCE CPaintManagerUI::GetResourceDll()//返回当前paintManager句柄
 {
     if( m_hResourceInstance == NULL ) return m_hInstance;
     return m_hResourceInstance;
@@ -294,13 +295,13 @@ void CPaintManagerUI::SetResourceDll(HINSTANCE hInst)
 
 void CPaintManagerUI::SetResourcePath(LPCTSTR pStrPath)
 {
-    m_pStrResourcePath = pStrPath;
+    m_pStrResourcePath = pStrPath;//设置静态成员，m_pStrResourcePath资源路径
     if( m_pStrResourcePath.IsEmpty() ) return;
-    TCHAR cEnd = m_pStrResourcePath.GetAt(m_pStrResourcePath.GetLength() - 1);
-    if( cEnd != _T('\\') && cEnd != _T('/') ) m_pStrResourcePath += _T('\\');
+    TCHAR cEnd = m_pStrResourcePath.GetAt(m_pStrResourcePath.GetLength() - 1);//获取路径最后一个字符
+    if( cEnd != _T('\\') && cEnd != _T('/') ) m_pStrResourcePath += _T('\\');//如果不是以'\\'或'/'结尾，则在尾部添加双斜杠
 }
 
-void CPaintManagerUI::SetResourceZip(LPVOID pVoid, unsigned int len)
+void CPaintManagerUI::SetResourceZip(LPVOID pVoid/*buffer ptr*/, unsigned int len/*buffer size*/)
 {
     if( m_pStrResourceZip == _T("membuffer") ) return;
     if( m_bCachedResourceZip && m_hResourceZip != NULL ) {
@@ -312,19 +313,23 @@ void CPaintManagerUI::SetResourceZip(LPVOID pVoid, unsigned int len)
         m_hResourceZip = (HANDLE)OpenZip(pVoid, len, 3);
 }
 
+/*
+**param pStrPath:zip文件名
+**param bCachedResourceZip:资源是否已经缓存 或 资源是否需要缓存
+**/
 void CPaintManagerUI::SetResourceZip(LPCTSTR pStrPath, bool bCachedResourceZip)
 {
-    if( m_pStrResourceZip == pStrPath && m_bCachedResourceZip == bCachedResourceZip ) return;
-    if( m_bCachedResourceZip && m_hResourceZip != NULL ) {
-        CloseZip((HZIP)m_hResourceZip);
+    if( m_pStrResourceZip == pStrPath && m_bCachedResourceZip == bCachedResourceZip ) return;//zip资源文件名字与传入资源名相同且已经被缓存，直接返回
+    if( m_bCachedResourceZip && m_hResourceZip != NULL ) { //资源已经被缓存且zip资源句柄不为空。这时候表明需要更新资源即缓存另一个zip资源，需要释放上一个缓存的资源。
+        CloseZip((HZIP)m_hResourceZip);//以zip句柄关闭资源
         m_hResourceZip = NULL;
     }
-    m_pStrResourceZip = pStrPath;
-    m_bCachedResourceZip = bCachedResourceZip;
-    if( m_bCachedResourceZip ) {
-        CDuiString sFile = CPaintManagerUI::GetResourcePath();
-        sFile += CPaintManagerUI::GetResourceZip();
-        m_hResourceZip = (HANDLE)OpenZip((void*)sFile.GetData(), 0, 2);
+    m_pStrResourceZip = pStrPath;//设置新的zip资源名
+    m_bCachedResourceZip = bCachedResourceZip;//设置新资源是否需要缓存
+    if( m_bCachedResourceZip ) { //需要缓存新资源
+        CDuiString sFile = CPaintManagerUI::GetResourcePath();//取得资源所在目录路径,即paintManager所属模块路径
+        sFile += CPaintManagerUI::GetResourceZip();//sFile	zip资源完整路径(包含资源名称)
+        m_hResourceZip = (HANDLE)OpenZip((void*)sFile.GetData(), 0, 2); //返回缓存的zip资源句柄
     }
 }
 
@@ -659,7 +664,7 @@ bool CPaintManagerUI::PreMessageHandler(UINT uMsg, WPARAM wParam, LPARAM lParam,
     for( int i = 0; i < m_aPreMessageFilters.GetSize(); i++ ) 
     {
         bool bHandled = false;
-        LRESULT lResult = static_cast<IMessageFilterUI*>(m_aPreMessageFilters[i])->MessageHandler(uMsg, wParam, lParam, bHandled);
+        LRESULT lResult = static_cast<IMessageFilterUI*>(m_aPreMessageFilters[i])->MessageHandler(uMsg, wParam, lParam, bHandled);//通过调用子类实现的MessageHandler方法进行过滤
         if( bHandled ) {
             return true;
         }
@@ -728,22 +733,22 @@ bool CPaintManagerUI::MessageHandler(UINT uMsg, WPARAM wParam, LPARAM lParam, LR
     for( int i = 0; i < m_aMessageFilters.GetSize(); i++ ) 
     {
         bool bHandled = false;
-        LRESULT lResult = static_cast<IMessageFilterUI*>(m_aMessageFilters[i])->MessageHandler(uMsg, wParam, lParam, bHandled);
-        if( bHandled ) {
+        LRESULT lResult = static_cast<IMessageFilterUI*>(m_aMessageFilters[i])->MessageHandler(uMsg, wParam, lParam, bHandled);//调用每个子窗口类的MessageHandler，进行消息过滤
+		if( bHandled ) {
             lRes = lResult;
 			switch( uMsg ) {
 			case WM_MOUSEMOVE:
 			case WM_LBUTTONDOWN:
 			case WM_LBUTTONDBLCLK:
 			case WM_LBUTTONUP:
-				{
+				{	//鼠标移动，左键按下，左键双击，左键释放；获取鼠标位置
 					POINT pt = { GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam) };
 					m_ptLastMousePos = pt;
 				}
 				break;
-			case WM_CONTEXTMENU:
-			case WM_MOUSEWHEEL:
-				{
+			case WM_CONTEXTMENU://用户想要一个菜单。右键鼠标，按下Shift+F10或按下键盘上的应用键
+			case WM_MOUSEWHEEL://鼠标轮滚动
+				{	
 					POINT pt = { GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam) };
 					::ScreenToClient(m_hWndPaint, &pt);
 					m_ptLastMousePos = pt;
@@ -754,7 +759,7 @@ bool CPaintManagerUI::MessageHandler(UINT uMsg, WPARAM wParam, LPARAM lParam, LR
         }
     }
 
-	if( m_bLayered ) {
+	if( m_bLayered ) { //m_bLayered干啥的？
 		switch( uMsg ) {
 		case WM_NCACTIVATE:
 			if( !::IsIconic(m_hWndPaint) ) {
@@ -770,6 +775,8 @@ bool CPaintManagerUI::MessageHandler(UINT uMsg, WPARAM wParam, LPARAM lParam, LR
 	}
 
     // Custom handling of events
+
+	//将系统消息转换为控件消息
     switch( uMsg ) {
     case WM_APP + 1:
         {
@@ -1735,11 +1742,11 @@ void CPaintManagerUI::RemoveAllOptionGroups()
 int CPaintManagerUI::MessageLoop()
 {
     MSG msg = { 0 };
-    while( ::GetMessage(&msg, NULL, 0, 0) ) {
+    while( ::GetMessage(&msg, NULL, 0, 0) ) { //获取属于当前线程的所有窗口消息以及当前线程消息队列中消息成员hwnd为null的消息
         if( !CPaintManagerUI::TranslateMessage(&msg) ) {
             ::TranslateMessage(&msg);
 			::DispatchMessage(&msg);
-			//try{
+			//try{   
    //         ::DispatchMessage(&msg);
 			//} catch(...) {
 			//	DUITRACE(_T("EXCEPTION: %s(%d)\n"), __FILET__, __LINE__);
@@ -3503,33 +3510,33 @@ bool CPaintManagerUI::TranslateMessage(const LPMSG pMsg)
 	// Pretranslate Message takes care of system-wide messages, such as
 	// tabbing and shortcut key-combos. We'll look for all messages for
 	// each window and any child control attached.
-	UINT uStyle = GetWindowStyle(pMsg->hwnd);
-	UINT uChildRes = uStyle & WS_CHILD;	
+	UINT uStyle = GetWindowStyle(pMsg->hwnd);//获得hwnd窗口句柄的样式,窗口样式https://docs.microsoft.com/en-us/windows/win32/winmsg/window-styles;窗口扩展样式https://docs.microsoft.com/en-us/windows/win32/winmsg/extended-window-styles
+	UINT uChildRes = uStyle & WS_CHILD;	//判断该窗口是不是子窗口
 	LRESULT lRes = 0;
-	if (uChildRes != 0)
+	if (uChildRes != 0)//子窗口
 	{
-		HWND hWndParent = ::GetParent(pMsg->hwnd);
+		HWND hWndParent = ::GetParent(pMsg->hwnd);//获取hwnd句柄的父句柄
 		//code by redrain 2014.12.3,解决edit和webbrowser按tab无法切换焦点的bug
 		//		for( int i = 0; i < m_aPreMessages.GetSize(); i++ ) 
-		for( int i = m_aPreMessages.GetSize() - 1; i >= 0 ; --i ) 
+		for( int i = m_aPreMessages.GetSize() - 1; i >= 0 ; --i )  //m_aPreMessages存储当前进程中所有CPaintManager的指针
 		{
-			CPaintManagerUI* pT = static_cast<CPaintManagerUI*>(m_aPreMessages[i]);        
+			CPaintManagerUI* pT = static_cast<CPaintManagerUI*>(m_aPreMessages[i]);//遍历每一个CPaintManager        
 			HWND hTempParent = hWndParent;
-			while(hTempParent)
+			while(hTempParent)//如果存在父句柄
 			{
 
-				if(pMsg->hwnd == pT->GetPaintWindow() || hTempParent == pT->GetPaintWindow())
+				if(pMsg->hwnd == pT->GetPaintWindow() || hTempParent == pT->GetPaintWindow())//消息发送的窗口句柄或其父句柄 = 当前获取到的CPaintManager存储的窗口句柄
 				{
-					if (pT->TranslateAccelerator(pMsg))
+					if (pT->TranslateAccelerator(pMsg))//转换虚拟按键消息，例如键盘按键
 						return true;
 
-					pT->PreMessageHandler(pMsg->message, pMsg->wParam, pMsg->lParam, lRes);
+					pT->PreMessageHandler(pMsg->message, pMsg->wParam, pMsg->lParam, lRes);//对pMsg进行过滤处理,实际的过滤在子窗口类实现的MessageHandler方法中
 					// 					if( pT->PreMessageHandler(pMsg->message, pMsg->wParam, pMsg->lParam, lRes) ) 
 					// 						return true;
 					// 
 					// 					return false;  
 				}
-				hTempParent = GetParent(hTempParent);
+				hTempParent = GetParent(hTempParent);//向上获取父句柄
 			}
 
 		}

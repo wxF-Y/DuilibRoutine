@@ -246,10 +246,10 @@ HWND CWindowWnd::Create(HWND hwndParent, LPCTSTR pstrName, DWORD dwStyle, DWORD 
 
 HWND CWindowWnd::Create(HWND hwndParent, LPCTSTR pstrName, DWORD dwStyle, DWORD dwExStyle, int x, int y, int cx, int cy, HMENU hMenu)
 {
-    if( GetSuperClassName() != NULL && !RegisterSuperclass() ) return NULL;
-    if( GetSuperClassName() == NULL && !RegisterWindowClass() ) return NULL;
+    if( GetSuperClassName() != NULL && !RegisterSuperclass() ) return NULL; //getSuperClassName恒定返回NULL。检测到GetSuperClassName返回NULL，中断判断后续不会执行RegisterSuperclass。
+    if( GetSuperClassName() == NULL && !RegisterWindowClass() ) return NULL;//执行RegisterWindowClass，注册窗口类
     m_hWnd = ::CreateWindowEx(dwExStyle, GetWindowClassName(), pstrName, dwStyle, x, y, cx, cy, hwndParent, hMenu, CPaintManagerUI::GetInstance(), this);
-    ASSERT(m_hWnd!=NULL && "handle is invalid");
+    ASSERT(m_hWnd!=NULL);
     return m_hWnd;
 }
 
@@ -373,12 +373,12 @@ bool CWindowWnd::RegisterWindowClass()
 {
     WNDCLASS wc = { 0 };
     wc.style = GetClassStyle();
-    wc.cbClsExtra = 0;
-    wc.cbWndExtra = 0;
-    wc.hIcon = NULL;
-    wc.lpfnWndProc = CWindowWnd::__WndProc;
-    wc.hInstance = CPaintManagerUI::GetInstance();
-    wc.hCursor = ::LoadCursor(NULL, IDC_ARROW);
+    wc.cbClsExtra = 0; //将字节初始化为0
+    wc.cbWndExtra = 0; //在窗口实例化之后分配的额外字节数,系统自动初始化为0
+    wc.hIcon = NULL; //类图标的句柄。该资源必须为一个icon资源的句柄，如果为NULL则系统提供默认icon
+    wc.lpfnWndProc = CWindowWnd::__WndProc; //回调函数，处理发送到窗口的消息
+    wc.hInstance = CPaintManagerUI::GetInstance(); //获得绘图管理器保存的当前程序句柄
+    wc.hCursor = ::LoadCursor(NULL, IDC_ARROW);	//加载游标资源.第一个参数为模块实例句柄，关联到将要加载资源的可执行文件。第二个参数为要加载的游标资源的名称--microsoft预定义游标。
     wc.hbrBackground = NULL;
     wc.lpszMenuName  = NULL;
     wc.lpszClassName = GetWindowClassName();
@@ -391,15 +391,17 @@ bool CWindowWnd::RegisterSuperclass()
 {
     // Get the class information from an existing
     // window so we can subclass it later on...
-    WNDCLASSEX wc = { 0 };
-    wc.cbSize = sizeof(WNDCLASSEX);
-    if( !::GetClassInfoEx(NULL, GetSuperClassName(), &wc) ) {
-        if( !::GetClassInfoEx(CPaintManagerUI::GetInstance(), GetSuperClassName(), &wc) ) {
+
+	//WNDCLASSEX结构体包含窗口类信息，常用于注册类RegisterClassEx()和类信息获取GetClassInfoEx()函数
+    WNDCLASSEX wc = { 0 };	
+    wc.cbSize = sizeof(WNDCLASSEX); //保存窗口信息结构体大小
+    if( !::GetClassInfoEx(NULL, GetSuperClassName(), &wc) ) {  //GetClassInfoEx检索窗口类的信息,包括与该窗口关联的图标的句柄。存储信息在wc中。 //第一个参数为NULL则检索系统定义的类
+        if( !::GetClassInfoEx(CPaintManagerUI::GetInstance(), GetSuperClassName(), &wc) ) {	//检索当前程序句柄窗口
             ASSERT(!"Unable to locate window class");
             return NULL;
         }
     }
-    m_OldWndProc = wc.lpfnWndProc;
+    m_OldWndProc = wc.lpfnWndProc; //lpfnWndProc指向窗口程序的指针
     wc.lpfnWndProc = CWindowWnd::__ControlProc;
     wc.hInstance = CPaintManagerUI::GetInstance();
     wc.lpszClassName = GetWindowClassName();
@@ -411,15 +413,15 @@ bool CWindowWnd::RegisterSuperclass()
 LRESULT CALLBACK CWindowWnd::__WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
     CWindowWnd* pThis = NULL;
-    if( uMsg == WM_NCCREATE ) {
+    if( uMsg == WM_NCCREATE ) { //VM_NCCREATE信息，当窗口首次创建时在VM_CREATE消息之前发送。
         LPCREATESTRUCT lpcs = reinterpret_cast<LPCREATESTRUCT>(lParam);
         pThis = static_cast<CWindowWnd*>(lpcs->lpCreateParams);
         pThis->m_hWnd = hWnd;
-        ::SetWindowLongPtr(hWnd, GWLP_USERDATA, reinterpret_cast<LPARAM>(pThis));
+        ::SetWindowLongPtr(hWnd, GWLP_USERDATA, reinterpret_cast<LPARAM>(pThis));	//改变hWnd窗口的属性
     } 
     else {
         pThis = reinterpret_cast<CWindowWnd*>(::GetWindowLongPtr(hWnd, GWLP_USERDATA));
-        if( uMsg == WM_NCDESTROY && pThis != NULL ) {
+        if( uMsg == WM_NCDESTROY && pThis != NULL ) {	
             LRESULT lRes = ::CallWindowProc(pThis->m_OldWndProc, hWnd, uMsg, wParam, lParam);
             ::SetWindowLongPtr(pThis->m_hWnd, GWLP_USERDATA, 0L);
             if( pThis->m_bSubclassed ) pThis->Unsubclass();
@@ -429,17 +431,17 @@ LRESULT CALLBACK CWindowWnd::__WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPAR
         }
     }
     if( pThis != NULL ) {
-        return pThis->HandleMessage(uMsg, wParam, lParam);
+        return pThis->HandleMessage(uMsg, wParam, lParam); //调用子窗口类自己实现的消息处理
     } 
     else {
-        return ::DefWindowProc(hWnd, uMsg, wParam, lParam);
+        return ::DefWindowProc(hWnd, uMsg, wParam, lParam);	//窗口默认消息处理程序
     }
 }
 
 LRESULT CALLBACK CWindowWnd::__ControlProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
     CWindowWnd* pThis = NULL;
-    if( uMsg == WM_NCCREATE ) {
+    if( uMsg == WM_NCCREATE ) {	//VM_NCCREATE信息，当窗口首次创建时在VM_CREATE消息之前发送。
         LPCREATESTRUCT lpcs = reinterpret_cast<LPCREATESTRUCT>(lParam);
         pThis = static_cast<CWindowWnd*>(lpcs->lpCreateParams);
         ::SetProp(hWnd, _T("WndX"), (HANDLE) pThis);
@@ -489,7 +491,7 @@ void CWindowWnd::ResizeClient(int cx /*= -1*/, int cy /*= -1*/)
 
 LRESULT CWindowWnd::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
-    return ::CallWindowProc(m_OldWndProc, m_hWnd, uMsg, wParam, lParam);
+    return ::CallWindowProc(m_OldWndProc, m_hWnd, uMsg, wParam, lParam);//m_OldWndProc是窗口默认处理程序，在构造函数中初始化
 }
 
 void CWindowWnd::OnFinalMessage(HWND /*hWnd*/)

@@ -827,6 +827,11 @@ void CControlUI::Event(TEventUI& event)
 
 void CControlUI::DoEvent(TEventUI& event)
 {
+	if (event.Type == UIEVENT_BUTTONDOWN)
+	{
+		m_pManager->SendNotify(this, DUI_MSGTYPE_BUTTONDOWN, event.wParam, event.lParam);
+		return;
+	}
     if( event.Type == UIEVENT_SETCURSOR )
     {
         ::SetCursor(::LoadCursor(NULL, MAKEINTRESOURCE(IDC_ARROW)));

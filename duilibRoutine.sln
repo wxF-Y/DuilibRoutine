@@ -11,6 +11,14 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DuiLib", "DuiLib\DuiLib.vcxproj", "{E106ACD7-4E53-4AEE-942B-D0DD426DB34E}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TreeNodeRoutine", "TreeNodeRoutine\TreeNodeRoutine.vcxproj", "{66ECD026-D3C7-4799-BE38-45B5514EE071}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E106ACD7-4E53-4AEE-942B-D0DD426DB34E} = {E106ACD7-4E53-4AEE-942B-D0DD426DB34E}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TabLayoutRoutine", "TabLayoutRoutine\TabLayoutRoutine.vcxproj", "{82B71942-0E90-4BA5-A2D3-5D6C492C1773}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E106ACD7-4E53-4AEE-942B-D0DD426DB34E} = {E106ACD7-4E53-4AEE-942B-D0DD426DB34E}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -68,6 +76,22 @@ Global
 		{66ECD026-D3C7-4799-BE38-45B5514EE071}.UnicodeRelease|x64.Build.0 = Release|x64
 		{66ECD026-D3C7-4799-BE38-45B5514EE071}.UnicodeRelease|x86.ActiveCfg = Release|Win32
 		{66ECD026-D3C7-4799-BE38-45B5514EE071}.UnicodeRelease|x86.Build.0 = Release|Win32
+		{82B71942-0E90-4BA5-A2D3-5D6C492C1773}.Debug|x64.ActiveCfg = Debug|x64
+		{82B71942-0E90-4BA5-A2D3-5D6C492C1773}.Debug|x64.Build.0 = Debug|x64
+		{82B71942-0E90-4BA5-A2D3-5D6C492C1773}.Debug|x86.ActiveCfg = Debug|Win32
+		{82B71942-0E90-4BA5-A2D3-5D6C492C1773}.Debug|x86.Build.0 = Debug|Win32
+		{82B71942-0E90-4BA5-A2D3-5D6C492C1773}.Release|x64.ActiveCfg = Release|x64
+		{82B71942-0E90-4BA5-A2D3-5D6C492C1773}.Release|x64.Build.0 = Release|x64
+		{82B71942-0E90-4BA5-A2D3-5D6C492C1773}.Release|x86.ActiveCfg = Release|Win32
+		{82B71942-0E90-4BA5-A2D3-5D6C492C1773}.Release|x86.Build.0 = Release|Win32
+		{82B71942-0E90-4BA5-A2D3-5D6C492C1773}.UnicodeDebug|x64.ActiveCfg = Debug|x64
+		{82B71942-0E90-4BA5-A2D3-5D6C492C1773}.UnicodeDebug|x64.Build.0 = Debug|x64
+		{82B71942-0E90-4BA5-A2D3-5D6C492C1773}.UnicodeDebug|x86.ActiveCfg = Debug|Win32
+		{82B71942-0E90-4BA5-A2D3-5D6C492C1773}.UnicodeDebug|x86.Build.0 = Debug|Win32
+		{82B71942-0E90-4BA5-A2D3-5D6C492C1773}.UnicodeRelease|x64.ActiveCfg = Release|x64
+		{82B71942-0E90-4BA5-A2D3-5D6C492C1773}.UnicodeRelease|x64.Build.0 = Release|x64
+		{82B71942-0E90-4BA5-A2D3-5D6C492C1773}.UnicodeRelease|x86.ActiveCfg = Release|Win32
+		{82B71942-0E90-4BA5-A2D3-5D6C492C1773}.UnicodeRelease|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

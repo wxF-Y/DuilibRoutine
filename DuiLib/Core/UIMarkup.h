@@ -45,7 +45,7 @@ private:
         ULONG iData;
     } XMLELEMENT;
 
-    LPTSTR m_pstrXML;
+    LPTSTR m_pstrXML;//xmlÎÄ¼þÄÚÈÝ
     XMLELEMENT* m_pElements;
     ULONG m_nElements;
     ULONG m_nReservedElements;

@@ -263,72 +263,97 @@ LRESULT WindowImplBase::OnSysCommand(UINT uMsg, WPARAM wParam, LPARAM lParam, BO
 
 LRESULT WindowImplBase::OnCreate(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)
 {
-	LONG styleValue = ::GetWindowLong(*this, GWL_STYLE);
+	LONG styleValue = ::GetWindowLong(*this, GWL_STYLE);//获取窗口样式
 	styleValue &= ~WS_CAPTION;
 	::SetWindowLong(*this, GWL_STYLE, styleValue | WS_CLIPSIBLINGS | WS_CLIPCHILDREN);
 	RECT rcClient;
-	::GetClientRect(*this, &rcClient);
+	::GetClientRect(*this, &rcClient); //获得控件自己Rect属性
 	::SetWindowPos(*this, NULL, rcClient.left, rcClient.top, rcClient.right - rcClient.left, \
-		rcClient.bottom - rcClient.top, SWP_FRAMECHANGED);
+		rcClient.bottom - rcClient.top, SWP_FRAMECHANGED); //改变大小，位置，孩子窗口的Z轴顺序,弹出窗口或顶层窗口.
+	/*
+	**第一个参数 HWND hwnd 窗口句柄
+	**第二个参数 先于定位窗口Z序的窗口句柄
+	**窗口的新左边位置，以控件left坐标
+	**窗口顶部
+	**窗口宽度
+	**窗口高度
+	**窗口大小和定位标志，SWP_FRAMECHANGED--应用setwindowlong函数设置的新窗口样式
+	*/
 
 	m_PaintManager.Init(m_hWnd);
 	m_PaintManager.AddPreMessageFilter(this);
 
-
-	CDuiString strResourcePath=m_PaintManager.GetResourcePath();
+	
+	CDuiString strResourcePath=m_PaintManager.GetResourcePath();//获取绘图管理器的资源路径
+	//资源不存在
 	if (strResourcePath.IsEmpty())
 	{
-		strResourcePath=m_PaintManager.GetInstancePath();
-		strResourcePath+=GetSkinFolder().GetData();
+		
+		strResourcePath=m_PaintManager.GetInstancePath(); //获取当前模块路径
+		strResourcePath+=GetSkinFolder().GetData();//模块路径+（与模块同路径下的）皮肤文件夹;通常由继承的窗口子类覆写GetSkinFolder方法决定
+		//strResourcePath现在就是皮肤文件夹路径, 该路径未包含皮肤文件名称
 	}
-	m_PaintManager.SetResourcePath(strResourcePath.GetData());
+	//如果皮肤资源是以文件的形式，则设置paintManager的资源路径即可。
+	//如果皮肤是以zip的形式，则还需要设置zip资源
+	m_PaintManager.SetResourcePath(strResourcePath.GetData());//绘图管理器设置上面获取到的资源路径
 
+
+	//上面设置了paintManager的资源路径，接下来处理皮肤文件本身。资源最终缓存之后是以资源句柄的形式存放在paintManager中
+
+	//资源类型由继承的窗口子类决定,子类覆盖GetResourceType函数()，否则返回UILIB_FILE--磁盘文件
+	//zip资源
 	switch(GetResourceType())
 	{
-	case UILIB_ZIP:
+	case UILIB_ZIP://磁盘zip资源
 		m_PaintManager.SetResourceZip(GetZIPFileName().GetData(), true);
 		break;
-	case UILIB_ZIPRESOURCE:
+	case UILIB_ZIPRESOURCE://集成到exe程序文件的zip资源
 		{
-			HRSRC hResource = ::FindResource(m_PaintManager.GetResourceDll(), GetResourceID(), _T("ZIPRES"));
+			HRSRC hResource = ::FindResource( m_PaintManager.GetResourceDll()/*获得当前paintManager的句柄*/, GetResourceID(), _T("ZIPRES") );//查找zip资源位置并返回资源句柄
 			if( hResource == NULL )
-				return 0L;
+				return 0L;//没找着
 			DWORD dwSize = 0;
-			HGLOBAL hGlobal = ::LoadResource(m_PaintManager.GetResourceDll(), hResource);
-			if( hGlobal == NULL ) 
+			HGLOBAL hGlobal = ::LoadResource(m_PaintManager.GetResourceDll(), hResource);//从paintManager模块句柄（包含资源的模块句柄）加载hResource指向的资源.返回值为资源内存块句柄
+			if( hGlobal == NULL ) //
 			{
 #if defined(WIN32) && !defined(UNDER_CE)
-				::FreeResource(hResource);
+				::FreeResource(hResource);//释放资源
 #endif
 				return 0L;
 			}
-			dwSize = ::SizeofResource(m_PaintManager.GetResourceDll(), hResource);
+			dwSize = ::SizeofResource(m_PaintManager.GetResourceDll(), hResource);//获取资源大小，以字节形式
 			if( dwSize == 0 )
 				return 0L;
-			m_lpResourceZIPBuffer = new BYTE[ dwSize ];
+			m_lpResourceZIPBuffer = new BYTE[ dwSize ];//申请资源大小的buffer内存
+			//分配buffer块成功，复制资源。失败，释放资源.
 			if (m_lpResourceZIPBuffer != NULL)
 			{
-				::CopyMemory(m_lpResourceZIPBuffer, (LPBYTE)::LockResource(hGlobal), dwSize);
+				::CopyMemory(m_lpResourceZIPBuffer, (LPBYTE)::LockResource(hGlobal), dwSize);//将资源复制dwSize字节到buffer中.Lockresource获取指向内存块第一个字节的指针
 			}
 #if defined(WIN32) && !defined(UNDER_CE)
 			::FreeResource(hResource);
 #endif
-			m_PaintManager.SetResourceZip(m_lpResourceZIPBuffer, dwSize);
+			m_PaintManager.SetResourceZip(m_lpResourceZIPBuffer, dwSize);//paintManager设置zip皮肤资源
 		}
 		break;
 	}
 
-	CDialogBuilder builder;	//dialogBuilder拥有Markup--xml解析器,
+	CDialogBuilder builder;
 	CControlUI* pRoot=NULL;
-	if (GetResourceType()==UILIB_RESOURCE)
+	//文件资源
+	if (GetResourceType()==UILIB_RESOURCE)//(exe可执行或dll?) 文件中的文件资源
 	{
-		STRINGorID xml(_ttoi(GetSkinFile().GetData()));
-		pRoot = builder.Create(xml, _T("xml"), this, &m_PaintManager);
+		STRINGorID xml(_ttoi(GetSkinFile().GetData()));//_ttoi将皮肤文件名转换为int型，xml变量（资源ID或字符串）使用转换的数字进行初始化。
+		/*STRINGorID类
+		**以字符串或整形初始化
+		**保存资源的字符串
+		**/
+
+		pRoot = builder.Create(xml/*资源id*/, _T("xml")/*资源类型*/, this/*回调，WinImplBase继承自IDialogBuilderCallback*/, &m_PaintManager);
 	}
 	else
-		pRoot = builder.Create(GetSkinFile().GetData()/*皮肤文件名*/, (UINT)0, this, &m_PaintManager);
-
-	//ASSERT(pRoot );
+		pRoot = builder.Create(GetSkinFile().GetData(), (UINT)0, this, &m_PaintManager);
+	ASSERT(pRoot);
 	if (pRoot==NULL)
 	{
 		MessageBox(NULL,_T("加载资源文件失败"),_T("Duilib"),MB_OK|MB_ICONERROR);
@@ -338,7 +363,7 @@ LRESULT WindowImplBase::OnCreate(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& 
 	m_PaintManager.AttachDialog(pRoot);
 	m_PaintManager.AddNotifier(this);
 
-	InitWindow();
+	InitWindow();	//子类实现，父类啥都不做
 	return 0;
 }
 
@@ -381,7 +406,7 @@ LRESULT WindowImplBase::OnMouseMove(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*l
 LRESULT WindowImplBase::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
 	LRESULT lRes = 0;
-	BOOL bHandled = TRUE;
+	BOOL bHandled = TRUE;//bHandled表示在本程序块是否被处理过，即下面的switch块
 	switch (uMsg)
 	{
 	case WM_CREATE:			lRes = OnCreate(uMsg, wParam, lParam, bHandled); break;
@@ -409,7 +434,7 @@ LRESULT WindowImplBase::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
 	}
 	if (bHandled) return lRes;
 
-	lRes = HandleCustomMessage(uMsg, wParam, lParam, bHandled);
+	lRes = HandleCustomMessage(uMsg, wParam, lParam, bHandled);//子窗口类类自己处理某些消息
 	if (bHandled) return lRes;
 
 	if (m_PaintManager.MessageHandler(uMsg, wParam, lParam, lRes))

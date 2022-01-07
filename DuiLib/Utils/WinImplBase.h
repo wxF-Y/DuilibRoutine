@@ -8,8 +8,8 @@ namespace DuiLib
 	{
 		UILIB_FILE=1,				// 来自磁盘文件
 		UILIB_ZIP,						// 来自磁盘zip压缩包
-		UILIB_RESOURCE,			// 来自资源
-		UILIB_ZIPRESOURCE,	// 来自资源的zip压缩包
+		UILIB_RESOURCE,			// 来自可执行程序中的资源文件
+		UILIB_ZIPRESOURCE,	// 来自（可执行程序还是动态库？）中的zip压缩包
 	};
 
 	class DUILIB_API WindowImplBase
