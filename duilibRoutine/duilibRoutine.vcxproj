@@ -74,9 +74,10 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)DuiLib;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)\DuiLib;$(IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)bin\</OutDir>
-    <LibraryPath>$(SolutionDir)Lib;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(SolutionDir)\Lib;$(LibraryPath)</LibraryPath>
+    <TargetName>$(ProjectName)_d</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -84,8 +85,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)\bin</OutDir>
-    <IncludePath>E:\DuilibRoutine\DuiLib;$(IncludePath)</IncludePath>
-    <LibraryPath>E:\DuilibRoutine\Lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)\DuiLib;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)\Lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>

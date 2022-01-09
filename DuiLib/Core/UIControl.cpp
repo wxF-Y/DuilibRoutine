@@ -822,7 +822,9 @@ void CControlUI::DoInit()
 
 void CControlUI::Event(TEventUI& event)
 {
-    if( OnEvent(&event) ) DoEvent(event);
+	if (OnEvent(&event)) {
+		DoEvent(event);
+	}
 }
 
 void CControlUI::DoEvent(TEventUI& event)

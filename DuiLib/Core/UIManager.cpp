@@ -776,7 +776,7 @@ bool CPaintManagerUI::MessageHandler(UINT uMsg, WPARAM wParam, LPARAM lParam, LR
 
     // Custom handling of events
 
-	//将系统消息转换为控件消息
+	//将系统消息转换为控件事件
     switch( uMsg ) {
     case WM_APP + 1:
         {
@@ -1315,7 +1315,7 @@ bool CPaintManagerUI::MessageHandler(UINT uMsg, WPARAM wParam, LPARAM lParam, LR
             }
         }
         break;
-    case WM_LBUTTONDOWN:
+	case WM_LBUTTONDOWN://鼠标左键按下
         {
             // We alway set focus back to our app (this helps
             // when Win32 child windows are placed on the dialog
@@ -1323,13 +1323,13 @@ bool CPaintManagerUI::MessageHandler(UINT uMsg, WPARAM wParam, LPARAM lParam, LR
             if (!m_bNoActivate) ::SetFocus(m_hWndPaint);
             if( m_pRoot == NULL ) break;
             POINT pt = { GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam) };
-            m_ptLastMousePos = pt;
-            CControlUI* pControl = FindControl(pt);
+            m_ptLastMousePos = pt; //鼠标最终的位置
+            CControlUI* pControl = FindControl(pt);//查找鼠标点击的控件
             if( pControl == NULL ) break;
             if( pControl->GetManager() != this ) break;
             m_pEventClick = pControl;
-            pControl->SetFocus();
-            SetCapture();
+            pControl->SetFocus();//将焦点设置到该控件
+            SetCapture();//设置了啥?
             TEventUI event = { 0 };
             event.Type = UIEVENT_BUTTONDOWN;
             event.pSender = pControl;
@@ -1338,7 +1338,7 @@ bool CPaintManagerUI::MessageHandler(UINT uMsg, WPARAM wParam, LPARAM lParam, LR
             event.ptMouse = pt;
             event.wKeyState = (WORD)wParam;
             event.dwTimestamp = ::GetTickCount();
-            pControl->Event(event);
+            pControl->Event(event);//添加控件的事件
         }
         break;
     case WM_LBUTTONDBLCLK:

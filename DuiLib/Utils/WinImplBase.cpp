@@ -437,9 +437,9 @@ LRESULT WindowImplBase::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
 	lRes = HandleCustomMessage(uMsg, wParam, lParam, bHandled);//子窗口类类自己处理某些消息
 	if (bHandled) return lRes;
 
-	if (m_PaintManager.MessageHandler(uMsg, wParam, lParam, lRes))
+	if (m_PaintManager.MessageHandler(uMsg, wParam, lParam, lRes))//CPaintManager的信息处理
 		return lRes;
-	return CWindowWnd::HandleMessage(uMsg, wParam, lParam);
+	return CWindowWnd::HandleMessage(uMsg, wParam, lParam);//调用默认处理
 }
 
 LRESULT WindowImplBase::HandleCustomMessage(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)
