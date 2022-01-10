@@ -763,11 +763,11 @@ void CControlUI::Invalidate()
     RECT rcParent;
     while( pParent = pParent->GetParent() )
     {
-        rcTemp = invalidateRc;
-        rcParent = pParent->GetPos();
-        if( !::IntersectRect(&invalidateRc, &rcTemp, &rcParent) ) 
+        rcTemp = invalidateRc;//自身矩形位置
+        rcParent = pParent->GetPos();//父控件矩形位置
+        if( !::IntersectRect(&invalidateRc, &rcTemp, &rcParent) ) //两个矩形相交，则返回非零；不相交则返回0.
         {
-            return;
+            return;//父子控件不相交，直接返回
         }
     }
 

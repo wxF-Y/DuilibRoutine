@@ -381,7 +381,7 @@ bool CMarkup::LoadFromMem(BYTE* pByte, DWORD dwSize, int encoding)
 
 bool CMarkup::LoadFromFile(LPCTSTR pstrFilename, int encoding)
 {
-    Release();
+    Release();//从文件加载时，释放上一个加载的文件资源
     CDuiString sFile = CPaintManagerUI::GetResourcePath();
     if( CPaintManagerUI::GetResourceZip().IsEmpty() ) {//没有设置zip资源
         sFile += pstrFilename;//文件完整路径
@@ -439,7 +439,7 @@ void CMarkup::Release()
     if( m_pElements != NULL ) free(m_pElements);
     m_pstrXML = NULL;
     m_pElements = NULL;
-    m_nElements;
+    m_nElements=0;
 }
 
 void CMarkup::GetLastErrorMessage(LPTSTR pstrMessage, SIZE_T cchMax) const
@@ -460,7 +460,7 @@ CMarkupNode CMarkup::GetRoot()
 
 bool CMarkup::_Parse()
 {
-    _ReserveElement(); // Reserve index 0 for errors
+    _ReserveElement(); // Reserve index 0 for errors，预留数组[0]
     ::ZeroMemory(m_szErrorMsg, sizeof(m_szErrorMsg));
     ::ZeroMemory(m_szErrorXML, sizeof(m_szErrorXML));
     LPTSTR pstrXML = m_pstrXML;//pstrXML 用于遍历缓冲区
@@ -551,7 +551,9 @@ CMarkup::XMLELEMENT* CMarkup::_ReserveElement()
         m_nReservedElements += (m_nReservedElements / 2) + 500;
         m_pElements = static_cast<XMLELEMENT*>(realloc(m_pElements, m_nReservedElements * sizeof(XMLELEMENT)));
     }
-    return &m_pElements[m_nElements++];
+	ULONG tmp = m_nElements;
+	m_nElements++;
+    return &m_pElements[tmp];
 }
 
 void CMarkup::_SkipWhitespace(LPCTSTR& pstr) const

@@ -1604,7 +1604,7 @@ void CPaintManagerUI::Invalidate(RECT& rcItem)
 	if( rcItem .top < 0 ) rcItem.top = 0;
 	if( rcItem.right < rcItem.left ) rcItem.right = rcItem.left;
 	if( rcItem.bottom < rcItem.top ) rcItem.bottom = rcItem.top;
-	if( !m_bLayered ) ::InvalidateRect(m_hWndPaint, &rcItem, FALSE);
+	if( !m_bLayered ) ::InvalidateRect(m_hWndPaint, &rcItem, FALSE);//使rcItem区域无效，但不重绘背景.
 	else ::UnionRect(&m_rcLayeredUpdate, &m_rcLayeredUpdate, &rcItem);
 }
 

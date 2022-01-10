@@ -8,16 +8,17 @@
         <Button name="maxbtn" width="50" text="max" />
         <Button name="closebtn" width="50" text="close" />
     </HorizontalLayout>
-    <HorizontalLayout name="HorizontalLayoutUI1" width="600" height="30" padding="2,2,2,2" >
-        <Option name="Option01" float="false" text="Tab01" width="60" height="30" textcolor="#FF1c1c1c" disabledtextcolor="#FFA7A6AA" align="center" leftbordersize="1" bordercolor="#ff000000"  selectedtextcolor="#ff96cdcd" group="switch" selected="true" />
-        <Option name="Option02" float="false" text="Tab02" width="60" height="30" textcolor="#FF1c1c1c" disabledtextcolor="#FFA7A6AA" align="center" leftbordersize="1" bordercolor="#ff000000" selectedtextcolor="#ff96cdcd" group="switch" />
+    <HorizontalLayout name="OptionsLayout"  height="30" padding="2,2,2,2" >
+        <Option name="Option0" float="false" text="Tab0" width="60" height="30" textcolor="#FF1c1c1c" disabledtextcolor="#FFA7A6AA" align="center" leftbordersize="1" bordercolor="#ff000000"  selectedtextcolor="#ff96cdcd" group="switch" selected="true" />
+        <Option name="Option1" float="false" text="Tab1" width="60" height="30" textcolor="#FF1c1c1c" disabledtextcolor="#FFA7A6AA" align="center" leftbordersize="1" bordercolor="#ff000000" selectedtextcolor="#ff96cdcd" group="switch" />
+        <Button name="addNewOption" width="20" height="20" normalimage="add.png" padding="5,5,5,5"/>
     </HorizontalLayout>
     <TabLayout name="TabLayoutMain" selectedid="-1" topbordersize="1" bordercolor="#ff000000" padding="2,2,2,2" >
         <HorizontalLayout>
-            <Label text="This is tab01." bkcolor="#FFFFFFFF"/>
+            <Label text="This is tab0." bkcolor="#FFFFFFFF"/>
         </HorizontalLayout>
         <HorizontalLayout>
-            <Label text="This is tab02." />
+            <Label text="This is tab1." />
         </HorizontalLayout>
     </TabLayout>
 </VerticalLayout>

@@ -4,6 +4,12 @@ using DuiLib::WindowImplBase;
 using DuiLib::CDuiString;
 using DuiLib::TNotifyUI;
 using DuiLib::CTabLayoutUI;
+using DuiLib::CHorizontalLayoutUI;
+using DuiLib::CControlUI;
+using DuiLib::COptionUI;
+using DuiLib::CLabelUI;
+using DuiLib::CDialogBuilder;
+using DuiLib::CMarkup;
 
 class MainWndFrame :
 	public WindowImplBase
@@ -17,5 +23,7 @@ public:
 	void InitWindow() override;//获取控件对象
 private:
 	CTabLayoutUI* _tabLayout;
+	COptionUI* _curSelected;
+	CHorizontalLayoutUI* _optionsLayout;
 };
 

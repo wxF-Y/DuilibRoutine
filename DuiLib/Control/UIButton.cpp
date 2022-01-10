@@ -60,8 +60,9 @@ namespace DuiLib
 		{
 			if( ::PtInRect(&m_rcItem, event.ptMouse) && IsEnabled() ) {
 				m_uButtonState |= UISTATE_PUSHED | UISTATE_CAPTURED;
-				Invalidate();
 				__super::DoEvent(event);//自己加的
+				Invalidate();
+				
 			}
 			return;
 		}

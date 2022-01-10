@@ -137,7 +137,6 @@ namespace DuiLib
 
         int __cdecl Format(LPCTSTR pstrFormat, ...);
         int __cdecl SmallFormat(LPCTSTR pstrFormat, ...);
-
     protected:
         LPTSTR m_pstr;
         TCHAR m_szBuffer[MAX_LOCAL_STRING_LEN + 1];
