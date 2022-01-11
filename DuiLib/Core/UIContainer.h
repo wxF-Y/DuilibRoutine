@@ -110,6 +110,8 @@ public:
     virtual CScrollBarUI* GetVerticalScrollBar() const;
     virtual CScrollBarUI* GetHorizontalScrollBar() const;
 
+	int getChildsCount() const { return m_items.GetSize(); };
+
 protected:
     virtual void SetFloatPos(int iIndex);
     virtual void ProcessScrollBar(RECT rc, int cxRequired, int cyRequired);

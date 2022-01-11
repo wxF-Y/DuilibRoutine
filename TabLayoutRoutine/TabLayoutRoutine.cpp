@@ -15,7 +15,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 {
 	CPaintManagerUI::SetInstance(hInstance);
 
-
 #if defined(WIN32) && !defined(UNDER_CE)
 	HRESULT Hr = ::CoInitialize(NULL);
 #else

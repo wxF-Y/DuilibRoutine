@@ -13,7 +13,8 @@ namespace DuiLib
 
     STRINGorID::STRINGorID(unsigned int nID) : m_lpstr(MAKEINTRESOURCE(nID))
     {
-    }
+	}
+
 
     /////////////////////////////////////////////////////////////////////////////////////
     //

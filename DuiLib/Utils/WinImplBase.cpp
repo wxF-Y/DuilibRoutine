@@ -288,11 +288,11 @@ LRESULT WindowImplBase::OnCreate(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& 
 	//资源不存在
 	if (strResourcePath.IsEmpty())
 	{
-		
 		strResourcePath=m_PaintManager.GetInstancePath(); //获取当前模块路径
 		strResourcePath+=GetSkinFolder().GetData();//模块路径+（与模块同路径下的）皮肤文件夹;通常由继承的窗口子类覆写GetSkinFolder方法决定
 		//strResourcePath现在就是皮肤文件夹路径, 该路径未包含皮肤文件名称
 	}
+
 	//如果皮肤资源是以文件的形式，则设置paintManager的资源路径即可。
 	//如果皮肤是以zip的形式，则还需要设置zip资源
 	m_PaintManager.SetResourcePath(strResourcePath.GetData());//绘图管理器设置上面获取到的资源路径
@@ -343,7 +343,9 @@ LRESULT WindowImplBase::OnCreate(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& 
 	//文件资源
 	if (GetResourceType()==UILIB_RESOURCE)//(exe可执行或dll?) 文件中的文件资源
 	{
-		STRINGorID xml(_ttoi(GetSkinFile().GetData()));//_ttoi将皮肤文件名转换为int型，xml变量（资源ID或字符串）使用转换的数字进行初始化。
+		CDuiString tmp = GetSkinFile().GetData();
+		int nID = _ttoi(tmp);
+		STRINGorID xml(nID);//_ttoi将皮肤文件名转换为int型，xml变量（资源ID或字符串）使用转换的数字进行初始化。
 		/*STRINGorID类
 		**以字符串或整形初始化
 		**保存资源的字符串

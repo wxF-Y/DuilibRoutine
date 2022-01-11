@@ -1,9 +1,11 @@
 #include "MainWndFrame.h"
 
+#include "resource.h"
+
 #include <string>
 CDuiString MainWndFrame::GetSkinFolder()
 {
-	return _T("TabLayout\\");
+	return _T("");
 }
 
 CDuiString MainWndFrame::GetSkinFile()
@@ -44,22 +46,29 @@ void MainWndFrame::Notify(TNotifyUI & msg)
 //xml文件创建控件
 //*********************
 				CDialogBuilder builder1;
-				CDialogBuilder builder2;
-				CControlUI* new_Option = builder1.Create(_T("option.xml"), (UINT)0, this, &m_PaintManager);
 
-
-				CMarkup* markUp = builder1.GetMarkup();
-				markUp->Release();
-				CControlUI* new_Tab_Layout = nullptr;
-				if( builder1.GetMarkup()->IsValid())
-					CControlUI* new_Tab_Layout = builder1.Create(_T("tab.xml"), (UINT)0, this, &m_PaintManager);
-				
+				DuiLib::STRINGorID op(IDF_XML2);
+				DuiLib::STRINGorID ta(IDF_XML3);
+				CControlUI* new_Option = builder1.Create(op, _T("xml"), this, &m_PaintManager);
+				CControlUI* new_Tab_Layout = builder1.Create(ta, _T("xml"), this, &m_PaintManager);
 				
 				if (!new_Option || !new_Tab_Layout) return;
-				new_Option->SetAttribute(_T("name"), (LPCTSTR)option_name.data());
-				new_Option->SetAttribute(_T("text"), (LPCTSTR)option_text.data());;
+				
+				//创建成功，设置属性
+				_curSelected->Selected(false);//将当前选中Option设置为未选中
+
+				//将成员变量_curSelected设置为新创建的Option
+				_curSelected = dynamic_cast<COptionUI*>(new_Option);
+				if (!_curSelected) return;
+				
+				_curSelected->Selected(true);
+				_curSelected->SetAttribute(_T("name"), (LPCTSTR)option_name.data());
+				_curSelected->SetAttribute(_T("text"), (LPCTSTR)option_text.data());
+
 				
 				CHorizontalLayoutUI* new_Tab = dynamic_cast<CHorizontalLayoutUI*>(new_Tab_Layout);
+				int n = new_Tab->getChildsCount();
+				if (!new_Tab) return;
 				CControlUI* label = new_Tab->GetItemAt(0);
 				label->SetAttribute(_T("text"), (LPCTSTR)tab_text.data());
 				_optionsLayout->AddAt(new_Option, index_addOption);
@@ -138,6 +147,21 @@ void MainWndFrame::InitWindow()
 	//获取控件对象
 	_tabLayout = dynamic_cast<CTabLayoutUI*>(m_PaintManager.FindControl(_T("TabLayoutMain")));
 	_optionsLayout = dynamic_cast<CHorizontalLayoutUI*>(m_PaintManager.FindControl(_T("OptionsLayout")));
-	_curSelected = dynamic_cast<COptionUI*>(m_PaintManager.FindControl(_T("Option0")));//初始化时，选择Option01
+	_curSelected = dynamic_cast<COptionUI*>(m_PaintManager.FindControl(_T("Option0")));//初始化时，选择Option0
+}
+
+UILIB_RESOURCETYPE MainWndFrame::GetResourceType() const
+{
+	return UILIB_RESOURCETYPE::UILIB_ZIPRESOURCE;
+}
+
+LPCTSTR MainWndFrame::GetResourceID() const
+{
+	return MAKEINTRESOURCE(IDR_ZIPRES1);
+}
+
+CDuiString MainWndFrame::GetZIPFileName() const
+{
+	return _T("TabLayout.zip");
 }
 

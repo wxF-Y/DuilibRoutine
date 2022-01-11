@@ -45,8 +45,8 @@ private:
         ULONG iData;
     } XMLELEMENT;
 
-    LPTSTR m_pstrXML;//xml文件内容
-    XMLELEMENT* m_pElements;
+    LPTSTR m_pstrXML;//指向xml文件内容buffer
+    XMLELEMENT* m_pElements;//提取的xml节点
     ULONG m_nElements;
     ULONG m_nReservedElements;
     TCHAR m_szErrorMsg[100];

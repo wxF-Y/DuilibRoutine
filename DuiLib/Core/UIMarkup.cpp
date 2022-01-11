@@ -265,6 +265,7 @@ bool CMarkup::Load(LPCTSTR pstrXML)
 **/
 bool CMarkup::LoadFromMem(BYTE* pByte, DWORD dwSize, int encoding)	
 {
+	Release();
 #ifdef _UNICODE
     if (encoding == XMLFILE_ENCODING_UTF8)
     {
@@ -439,7 +440,8 @@ void CMarkup::Release()
     if( m_pElements != NULL ) free(m_pElements);
     m_pstrXML = NULL;
     m_pElements = NULL;
-    m_nElements=0;
+	m_nElements;//原
+    m_nElements=0;//修改后。用于创建不同控件时的清理：清理上一个不同控件的节点数
 }
 
 void CMarkup::GetLastErrorMessage(LPTSTR pstrMessage, SIZE_T cchMax) const

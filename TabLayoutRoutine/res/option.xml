@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Window>
+    <Option  float="false" width="60" height="30" textcolor="#FF1c1c1c" disabledtextcolor="#FFA7A6AA" align="center" leftbordersize="1" bordercolor="#ff000000" selectedtextcolor="#ff96cdcd" group="switch" />
+</Window>

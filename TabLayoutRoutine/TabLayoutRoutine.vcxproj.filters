@@ -30,12 +30,18 @@
     <ClInclude Include="MainWndFrame.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TabLayoutRoutine.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="MainWndFrame.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
@@ -51,5 +57,22 @@
     <Image Include="TabLayoutRoutine.ico">
       <Filter>资源文件</Filter>
     </Image>
+    <Image Include="res\add.png">
+      <Filter>资源文件</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="res\option.xml">
+      <Filter>资源文件</Filter>
+    </Xml>
+    <Xml Include="res\skin.xml">
+      <Filter>资源文件</Filter>
+    </Xml>
+    <Xml Include="res\tab.xml">
+      <Filter>资源文件</Filter>
+    </Xml>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\bin\TabLayout.zip" />
   </ItemGroup>
 </Project>

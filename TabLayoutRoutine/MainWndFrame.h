@@ -10,6 +10,7 @@ using DuiLib::COptionUI;
 using DuiLib::CLabelUI;
 using DuiLib::CDialogBuilder;
 using DuiLib::CMarkup;
+using DuiLib::UILIB_RESOURCETYPE;
 
 class MainWndFrame :
 	public WindowImplBase
@@ -21,6 +22,16 @@ public:
 	LPCTSTR GetWindowClassName(void) const override;
 	void Notify(TNotifyUI& msg) override;//处理触发事件
 	void InitWindow() override;//获取控件对象
+
+	//zip
+	UILIB_RESOURCETYPE GetResourceType() const override;
+
+	//使用资源zip时重载本函数
+	LPCTSTR GetResourceID() const override;
+
+	//使用磁盘zip时重载本函数
+	CDuiString GetZIPFileName() const override;
+
 private:
 	CTabLayoutUI* _tabLayout;
 	COptionUI* _curSelected;
