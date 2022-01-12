@@ -2,9 +2,9 @@
 <Window size="1022,670" caption="0,0,0,35">
 	<Font shared="true" id="1" name="微软雅黑" size="15" />
 	<Font shared="true" id="2" name="微软雅黑" size="25" bold="true"  />
-	<VerticalLayout>
+	<VerticalLayout name="bkControl" bkcolor="#FF2c2c2c">
 		<!-- 标题栏 -->
-		<HorizontalLayout  height="50" bkcolor="#FF2c2c2c" >
+		<HorizontalLayout  height="50"  >
 			<!-- Logo -->
 			<HorizontalLayout width="200" inset="15,15,15,0">
 				<Control bkimage="cloud.png" width="24" height="24" />
@@ -35,7 +35,7 @@
 				<!-- login status -->
 				<Button width="20" height="20" normalimage="n_vip.png"/>
 				<!-- skin -->
-				<Button width="20" height="20" normalimage="btn_skin_nor.png" hotimage="btn_skin_hov.png"/>
+				<Button name="btn_skinChange" width="20" height="20" normalimage="btn_skin_nor.png" hotimage="btn_skin_hov.png"/>
 				<!-- setting -->
 				<Button width="20" height="20" normalimage="btn_setting_nor.png" hotimage="btn_setting_hov.png"/>
 				<!-- email -->

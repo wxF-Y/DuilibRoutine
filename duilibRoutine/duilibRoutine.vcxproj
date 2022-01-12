@@ -164,6 +164,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="ColorSkinWndFrame.h" />
     <ClInclude Include="duilibRoutine.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="LoginWndFrame.h" />
@@ -172,6 +173,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ColorSkinWndFrame.cpp" />
     <ClCompile Include="duilibRoutine.cpp" />
     <ClCompile Include="LoginWndFrame.cpp" />
     <ClCompile Include="MainWndFrame.cpp" />

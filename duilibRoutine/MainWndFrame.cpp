@@ -1,5 +1,7 @@
 #include "MainWndFrame.h"
 
+#include "ColorSkinWndFrame.h"
+
 #include <string>
 
 using DuiLib::CDuiRect;
@@ -51,6 +53,7 @@ void MainWndFrame::InitWindow()
 	_btn_shutdown = dynamic_cast<CButtonUI*>(m_PaintManager.FindControl(_T("btn_shutdown")));
 	_btn_personal = dynamic_cast<CButtonUI*>(m_PaintManager.FindControl(_T("btn_personal")));
 	_btn_skin = dynamic_cast<CButtonUI*>(m_PaintManager.FindControl(_T("btn_skinChange")));
+
 	_tabLayout = dynamic_cast<CTabLayoutUI*>(m_PaintManager.FindControl(_T("ContentTabLayout")));
 
 
@@ -93,6 +96,17 @@ LRESULT MainWndFrame::OnClose(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL & bH
 	if (uMsg == WM_CLOSE)
 		PostQuitMessage(0L);
 	return __super::OnClose(uMsg, wParam, lParam, bHandled);
+}
+
+void MainWndFrame::setBKColor(DWORD dwBackColor)
+{
+	CControlUI* background = m_PaintManager.FindControl(_T("bkControl"));
+	if (background != NULL)
+	{
+		background->SetBkImage(_T(""));//ÖÃ¿Õ±³¾°Í¼
+		background->SetBkColor(dwBackColor);//ÉèÖÃ±³¾°¿Ø¼þµÄÑÕÉ«
+		background->NeedUpdate();//Ë¢ÐÂ
+	}
 }
 
 void MainWndFrame::HandleOptionEvent(TNotifyUI & msg)
@@ -184,6 +198,7 @@ void MainWndFrame::HandlePersonalEvent(TNotifyUI & msg)
 		CDuiRect rcWindow;
 		GetWindowRect(m_hWnd, &rcWindow);
 		rcWindow.top = rcWindow.top + msg.pSender->GetPos().bottom;
+		new ColorSkinWndFrame(this,rcWindow);
 	}
 	else
 		return;

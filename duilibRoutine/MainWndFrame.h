@@ -24,6 +24,8 @@ public:
 	virtual void Notify(TNotifyUI& msg);//处理触发事件
 	virtual LRESULT OnClose(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);//向系统请求终止
 
+	void setBKColor(DWORD dwBackColor);
+
 	void HandleOptionEvent(TNotifyUI & msg);
 	void HandleBasicBtnEvEnt(TNotifyUI& msg);
 	void HandlePersonalEvent(TNotifyUI& msg);
@@ -39,10 +41,12 @@ private:
 	
 	CDialogBuilder* _builder;
 
+	//基本窗口控件
 	CButtonUI* _btn_min;
 	CButtonUI* _btn_max;
 	CButtonUI* _btn_restore;
 	CButtonUI* _btn_shutdown;
+
 
 	//标题栏控件
 	CButtonUI* _btn_personal;

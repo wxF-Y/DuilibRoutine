@@ -249,6 +249,12 @@ HWND CWindowWnd::Create(HWND hwndParent, LPCTSTR pstrName, DWORD dwStyle, DWORD 
     if( GetSuperClassName() != NULL && !RegisterSuperclass() ) return NULL; //getSuperClassName恒定返回NULL。检测到GetSuperClassName返回NULL，中断判断后续不会执行RegisterSuperclass。
     if( GetSuperClassName() == NULL && !RegisterWindowClass() ) return NULL;//执行RegisterWindowClass，注册窗口类
     m_hWnd = ::CreateWindowEx(dwExStyle, GetWindowClassName(), pstrName, dwStyle, x, y, cx, cy, hwndParent, hMenu, CPaintManagerUI::GetInstance(), this);
+	/*
+	** param x : 窗口的初始水平位置.对于重叠或者弹出窗口，x是窗口左上角的x坐标，相对于屏幕坐标。对于子窗口,x是左上角相对于父窗口左上角的x坐标.
+	** param y : 窗口的初始垂直位置。对于重叠或弹出窗口，y参数是窗口左上角的初始 y 坐标，以屏幕坐标表示。对于子窗口，y是子窗口左上角相对于父窗口客户区左上角的初始 y 坐标。对于列表框，y是列表框客户区左上角相对于父窗口客户区左上角的初始 y 坐标。
+	**
+	*/
+
     ASSERT(m_hWnd!=NULL);
     return m_hWnd;
 }

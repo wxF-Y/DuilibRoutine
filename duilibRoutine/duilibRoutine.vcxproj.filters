@@ -33,6 +33,9 @@
     <ClInclude Include="LoginWndFrame.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="ColorSkinWndFrame.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="duilibRoutine.cpp">
@@ -42,6 +45,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="LoginWndFrame.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ColorSkinWndFrame.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
