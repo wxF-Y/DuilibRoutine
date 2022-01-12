@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Window size="1022,670" caption="0,0,0,35">
 	<Font shared="true" id="1" name="微软雅黑" size="15" />
+	<Font shared="true" id="2" name="微软雅黑" size="25" bold="true"  />
 	<VerticalLayout>
 		<!-- 标题栏 -->
 		<HorizontalLayout  height="50" bkcolor="#FF2c2c2c" >
@@ -28,7 +29,7 @@
 			<Control />
 
 			<!-- 个人-->
-			<HorizontalLayout width="180" childpadding="10" inset="30,15">
+			<HorizontalLayout name="PersonalLayout" width="180" childpadding="10" inset="30,15">
 				<!-- user -->
 				<Button name="btn_personal" width="20" height="20" normalimage="btn_user.png"/>
 				<!-- login status -->
@@ -45,7 +46,7 @@
 			
 			
 			<!-- 基本窗口组件min,max,shutdown -->
-			<HorizontalLayout width="120" childpadding="12" inset="10,15,10,0">
+			<HorizontalLayout name="BasicWindowComLayout"  width="120" childpadding="12" inset="10,15,10,0">
 				<!-- min -->
 				<Button name="btn_min" width="25" height="24" normalimage="btn_min_nor.png" hotimage="btn_min_hov.png" />
 				<!-- max -->
@@ -61,47 +62,29 @@
 		<!-- 窗口内容 -->
 		<HorizontalLayout bkcolor="#FFFFFFFF" bordercolor="#FF6D6D6D">
 			<!-- 功能区 -->
-			<VerticalLayout width="200"  bkcolor="#FFFFFFFF" inset="15" multiexpanding="false" childpadding="5">
-				<!--
-				<List name="functions" height="410" bkcolor="#FFF04141" itemhotbkcolor="#FFE1DDDA" itemselectedbkcolor="#FFE1DDDA">
-					<ListLabelElement height="40" text="发现音乐"  font="5" selected="true" />
-					<ListLabelElement height="40" text="播客"  font="5" />
-					<ListLabelElement height="40" text="视频"  font="5" />
-					<ListLabelElement height="40" text="关注"  font="5" />
-					<ListLabelElement height="40" text="直播"  font="5" />
-					<ListLabelElement height="40" text="私人"  font="5" />
-					<ListLabelElement height="40" text="我的音乐" font="2" enabled="false"/>
-					<ListLabelElement height="40" text="本地与下载" font="5"/>
-					<ListLabelElement height="40" text="最近播放" font="5"/>
-					<ListLabelElement name="createdMusicList" height="40" text="创建的歌单" textcolor="#FFF3F1F1" font="5"/>
-				</List>
-				<List name="musicList" header="false" visible="false" bkcolor="#FFACA3A3">
-						<ListLabelElement height="40" text="我喜欢的音乐" font="5"/>
-						<ListLabelElement height="40" text="我喜欢的音乐" font="5"/>
-				</List>
-				-->
-				
-				<Option text="发现音乐" name="findMusic" height="40" align="left" hotimage=" file='tabbar_hover.png' " selectedimage=" file='tabbar_hover.png' "/>
-				<Option text="播客" name="boke" height="40" align="left" hotimage=" file='tabbar_hover.png' " selectedimage=" file='tabbar_hover.png' "/>
-				<Option text="视频" name="video" height="40" align="left" hotimage=" file='tabbar_hover.png' " selectedimage=" file='tabbar_hover.png' "/>
-				<Option text="关注" name="att" height="40" align="left" hotimage=" file='tabbar_hover.png' " selectedimage=" file='tabbar_hover.png' "/>
-				<Option text="直播" name="zhibo" height="40" align="left" hotimage=" file='tabbar_hover.png' " selectedimage=" file='tabbar_hover.png' "/>
-				<Option text="私人" name="private" height="40" align="left" hotimage=" file='tabbar_hover.png' " selectedimage=" file='tabbar_hover.png' "/>
-				<Label text="我的音乐" name="myMusic" height="20" enabled="false" align="left"/>
-				<Option text="本地与下载" name="localAndDownload" height="40" align="left" hotimage=" file='tabbar_hover.png' " selectedimage=" file='tabbar_hover.png' "/>
-				<Option text="最近播放" name="frequentlyPlay" height="40" align="left"  hotimage="tabbar_hover.png" selectedimage="tabbar_hover.png"/>
-				<TreeView >
+			<VerticalLayout name="OptionLayout" width="200"  inset="15,15,15,0" multiexpanding="false" childpadding="5" vscrollbar="true">
+				<Option text="发现音乐" font="1" name="findMusic" height="40" align="left" borderround="4,4"  bordercolor="#FF000000" group="function" selected="true"/>
+				<Option text="播客" font="1" name="boke" height="40" align="left" borderround="4,4"  bordercolor="#FF000000" group="function" />
+				<Option text="视频" font="1" name="video" height="40" align="left" borderround="4,4"  bordercolor="#FF000000" group="function"/>
+				<Option text="关注" font="1" name="att" height="40" align="left" borderround="4,4"  bordercolor="#FF000000" group="function"/>
+				<Option text="直播" font="1" name="zhibo" height="40" align="left" borderround="4,4"  bordercolor="#FF000000" group="function"/>
+				<Option text="私人" font="1" name="private" height="40" align="left" borderround="4,4"  bordercolor="#FF000000" group="function"/>
+				<Label text="我的音乐" font="1" name="myMusic" height="20" enabled="false" align="left"/>
+				<Option text="本地与下载" font="1" name="localAndDownload" height="40" align="left" borderround="4,4"  bordercolor="#FF000000" group="function"/>
+				<Option text="最近播放" font="1" name="frequentlyPlay" height="40" align="left"  borderround="4,4"  bordercolor="#FF000000" group="function"/>
+				<!-- <TreeView >
 					<TreeNode name="createdMusicList" text="创建的歌单" height="40" >
 						<TreeNode text="我喜欢的音乐" height="40" align="left"/>
 					</TreeNode>
-				</TreeView>
+				</TreeView> -->
 			</VerticalLayout>
 			
 			<Control width="1" bkcolor="#FFC6C6C6"/>
 
 			<!-- 内容区域 -->
-			<VerticalLayout bkcolor="#FFFFFFFF">
-			</VerticalLayout>
+			<TabLayout name="ContentTabLayout" selectedid="-1" topbordersize="1" bordercolor="#ff000000" padding="2,2,2,2" >
+
+    		</TabLayout>
 		</HorizontalLayout>
 		
 		<Control bkcolor="#FFC6C6C6" height="1"/>

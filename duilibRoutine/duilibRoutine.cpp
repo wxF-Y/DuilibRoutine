@@ -7,7 +7,7 @@
 #include "MainWndFrame.h"
 
 #include "UIlib.h"
-
+using DuiLib::CPaintManagerUI;
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	_In_opt_ HINSTANCE hPrevInstance,

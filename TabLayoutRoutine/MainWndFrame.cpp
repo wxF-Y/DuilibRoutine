@@ -3,9 +3,21 @@
 #include "resource.h"
 
 #include <string>
+
+MainWndFrame::MainWndFrame()
+	:_tabLayout{NULL},_curSelected{NULL},_optionsLayout{NULL},_builder{new CDialogBuilder}
+{
+
+}
+
+MainWndFrame::~MainWndFrame()
+{
+	delete _builder;
+}
+
 CDuiString MainWndFrame::GetSkinFolder()
 {
-	return _T("");
+	return _T("TabLayout\\");
 }
 
 CDuiString MainWndFrame::GetSkinFile()
@@ -45,17 +57,16 @@ void MainWndFrame::Notify(TNotifyUI & msg)
 //*********************
 //xml文件创建控件
 //*********************
-				CDialogBuilder builder1;
+				CDialogBuilder _builder;
 
-				DuiLib::STRINGorID op(IDF_XML2);
-				DuiLib::STRINGorID ta(IDF_XML3);
-				CControlUI* new_Option = builder1.Create(op, _T("xml"), this, &m_PaintManager);
-				CControlUI* new_Tab_Layout = builder1.Create(ta, _T("xml"), this, &m_PaintManager);
+				CControlUI* new_Option = _builder.Create(_T("option.xml"),(UINT)0, this, &m_PaintManager);
+				CControlUI* new_Tab_Layout = _builder.Create(_T("tab.xml"), (UINT)0, this, &m_PaintManager);
 				
 				if (!new_Option || !new_Tab_Layout) return;
 				
 				//创建成功，设置属性
 				_curSelected->Selected(false);//将当前选中Option设置为未选中
+				_curSelected->SetAttribute(_T("bkcolor"), _T("#00000000"));
 
 				//将成员变量_curSelected设置为新创建的Option
 				_curSelected = dynamic_cast<COptionUI*>(new_Option);
@@ -64,6 +75,7 @@ void MainWndFrame::Notify(TNotifyUI & msg)
 				_curSelected->Selected(true);
 				_curSelected->SetAttribute(_T("name"), (LPCTSTR)option_name.data());
 				_curSelected->SetAttribute(_T("text"), (LPCTSTR)option_text.data());
+				_curSelected->SetAttribute(_T("bkcolor"), _T("#FF000000"));
 
 				
 				CHorizontalLayoutUI* new_Tab = dynamic_cast<CHorizontalLayoutUI*>(new_Tab_Layout);
@@ -120,10 +132,12 @@ void MainWndFrame::Notify(TNotifyUI & msg)
 
 			//取消选择之前的option
 			_curSelected->Selected(false);
+			_curSelected->SetAttribute(_T("bkcolor"), _T("#00000000"));
 
 			//设置现在选择的option
 			_curSelected = dynamic_cast<COptionUI*>(msg.pSender);
 			_curSelected->Selected(true);
+			_curSelected->SetAttribute(_T("bkcolor"), _T("#FF000000"));
 			
 			//切换tab内容控件
 #if defined _UNICODE
@@ -152,7 +166,7 @@ void MainWndFrame::InitWindow()
 
 UILIB_RESOURCETYPE MainWndFrame::GetResourceType() const
 {
-	return UILIB_RESOURCETYPE::UILIB_ZIPRESOURCE;
+	return UILIB_RESOURCETYPE::UILIB_FILE;
 }
 
 LPCTSTR MainWndFrame::GetResourceID() const

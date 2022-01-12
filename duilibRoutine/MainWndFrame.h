@@ -1,9 +1,16 @@
 #pragma once
 #include "UIlib.h"
-using namespace DuiLib;
+using DuiLib::WindowImplBase;
+using DuiLib::CDuiString;
+using DuiLib::CTabLayoutUI;
+using DuiLib::CControlUI;
+using DuiLib::COptionUI;
+using DuiLib::CDialogBuilder;
+using DuiLib::CButtonUI;
 
 #include "LoginWndFrame.h"
 
+#include <map>
 
 class MainWndFrame :
 	public DuiLib::WindowImplBase
@@ -16,16 +23,34 @@ public:
 	virtual void InitWindow();//获取控件对象
 	virtual void Notify(TNotifyUI& msg);//处理触发事件
 	virtual LRESULT OnClose(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);//向系统请求终止
+
+	void HandleOptionEvent(TNotifyUI & msg);
+	void HandleBasicBtnEvEnt(TNotifyUI& msg);
+	void HandlePersonalEvent(TNotifyUI& msg);
 private:
-	CControlUI* _btn_min;
-	CControlUI* _btn_max;
-	CControlUI* _btn_restore;
-	CControlUI* _btn_shutdown;
+
+	CControlUI* CreateNewTab();//以当前选中option -- _curSelectedOption的name进行创建tab.在创建之前一定要先初始化_curSelectedOption成员变量
+
+#if defined _UNICODE
+	std::map<std::wstring, int> m_optionMapToTab;
+#else
+	std::map<std::string, int> m_optionMapToTab;
+#endif
+	
+	CDialogBuilder* _builder;
+
+	CButtonUI* _btn_min;
+	CButtonUI* _btn_max;
+	CButtonUI* _btn_restore;
+	CButtonUI* _btn_shutdown;
 
 	//标题栏控件
-	CControlUI* _btn_personal;
-	CControlUI* _btn_skin;
+	CButtonUI* _btn_personal;
+	CButtonUI* _btn_skin;
 
+	//侧边option和tab内容区
+	CTabLayoutUI* _tabLayout;
+	COptionUI* _curSelectedOption;
 
 	//子窗口
 	LoginWndFrame* _loginWndFrame;

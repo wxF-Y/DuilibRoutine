@@ -16,6 +16,8 @@ class MainWndFrame :
 	public WindowImplBase
 {
 public:
+	MainWndFrame();
+	~MainWndFrame();
 	// Í¨¹ý WindowImplBase ¼Ì³Ð
 	CDuiString GetSkinFolder() override;
 	CDuiString GetSkinFile() override;
@@ -36,5 +38,7 @@ private:
 	CTabLayoutUI* _tabLayout;
 	COptionUI* _curSelected;
 	CHorizontalLayoutUI* _optionsLayout;
+
+	CDialogBuilder* _builder;
 };
 
