@@ -197,7 +197,8 @@ void MainWndFrame::HandlePersonalEvent(TNotifyUI & msg)
 	{
 		CDuiRect rcWindow;
 		GetWindowRect(m_hWnd, &rcWindow);
-		rcWindow.top = rcWindow.top + msg.pSender->GetPos().bottom;
+		RECT senderRect = msg.pSender->GetPos();
+		rcWindow.top = rcWindow.top + senderRect.bottom;
 		new ColorSkinWndFrame(this,rcWindow);
 	}
 	else

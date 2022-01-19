@@ -1239,6 +1239,16 @@ void CRenderEngine::DrawGradient(HDC hDC, const RECT& rc, DWORD dwFirst, DWORD d
     }
 }
 
+bool CRenderEngine::DrawImageString(HDC hDC, CPaintManagerUI* pManager, const RECT& rc, const RECT& rcPaint,
+	LPCTSTR pStrImage, LPCTSTR pStrModify, HINSTANCE instance)
+{
+	//if ((pManager == NULL) || (hDC == NULL)) return false;
+	//const TDrawInfo* pDrawInfo = pManager->GetDrawInfo(pStrImage, pStrModify);
+	//return DrawImageInfo(hDC, pManager, rc, rcPaint, pDrawInfo, instance);
+	return 1;
+}
+
+
 void CRenderEngine::DrawLine( HDC hDC, const RECT& rc, int nSize, DWORD dwPenColor, int nStyle)
 {
 	ASSERT(::GetObjectType(hDC)==OBJ_DC || ::GetObjectType(hDC)==OBJ_MEMDC);

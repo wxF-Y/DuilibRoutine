@@ -161,6 +161,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="CTabBarItemUI.h" />
+    <ClInclude Include="CTabBarUI.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="MainWndFrame.h" />
     <ClInclude Include="Resource.h" />
@@ -169,6 +171,8 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CTabBarItemUI.cpp" />
+    <ClCompile Include="CTabBarUI.cpp" />
     <ClCompile Include="MainWndFrame.cpp" />
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="TabLayoutRoutine.cpp" />

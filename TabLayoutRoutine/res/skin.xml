@@ -9,8 +9,8 @@
         <Button name="closebtn" width="50" text="close" />
     </HorizontalLayout>
     <HorizontalLayout name="OptionsLayout"  height="30" padding="2,2,2,2" >
-        <Option name="Option0" float="false" text="Tab0" width="60" height="30" textcolor="#FF1c1c1c" disabledtextcolor="#FFA7A6AA" align="center" leftbordersize="1" bordercolor="#ff000000"  selectedtextcolor="#ff96cdcd" group="switch" selected="true" />
-        <Option name="Option1" float="false" text="Tab1" width="60" height="30" textcolor="#FF1c1c1c" disabledtextcolor="#FFA7A6AA" align="center" leftbordersize="1" bordercolor="#ff000000" selectedtextcolor="#ff96cdcd" group="switch" />
+        <!--<Option name="Option0" float="false" text="Tab0" width="60" height="30" textcolor="#FF1c1c1c" disabledtextcolor="#FFA7A6AA" align="center" leftbordersize="1" bordercolor="#ff000000"  selectedtextcolor="#ff96cdcd" group="switch" selected="true" />-->
+        <!--<Option name="Option1" float="false" text="Tab1" width="60" height="30" textcolor="#FF1c1c1c" disabledtextcolor="#FFA7A6AA" align="center" leftbordersize="1" bordercolor="#ff000000" selectedtextcolor="#ff96cdcd" group="switch" />-->
         <Button name="addNewOption" width="20" height="20" normalimage="res='137' restype='png'" padding="5,5,5,5"/>
     </HorizontalLayout>
     <TabLayout name="TabLayoutMain" selectedid="-1" topbordersize="1" bordercolor="#ff000000" padding="2,2,2,2" >

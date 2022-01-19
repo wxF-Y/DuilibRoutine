@@ -12,6 +12,8 @@ using DuiLib::CDialogBuilder;
 using DuiLib::CMarkup;
 using DuiLib::UILIB_RESOURCETYPE;
 
+class CTabBarUI;
+
 class MainWndFrame :
 	public WindowImplBase
 {
@@ -40,5 +42,7 @@ private:
 	CHorizontalLayoutUI* _optionsLayout;
 
 	CDialogBuilder* _builder;
+
+	CTabBarUI* _tabBarUI;
 };
 
